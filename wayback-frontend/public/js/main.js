@@ -43,7 +43,7 @@ app.ports.sendMessage.subscribe(function (message) {
 app.ports.loadCaptcha.subscribe(async function () {
     requestAnimationFrame(function () {
         try { hcaptcha.remove(); } catch (Exception) { }
-        hcaptcha.render('h-captcha', { sitekey: '50598e3f-06d1-4fa7-a038-1ee9315ba701' })
+        hcaptcha.render('h-captcha', { sitekey: 'c6e8ef3c-9042-49da-9f4a-31c40af222a6' })
     })
 });
 
