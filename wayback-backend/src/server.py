@@ -5,6 +5,7 @@ import os
 import sys
 import logging.config
 import yaml
+from urllib.parse import quote_plus
 try:
     import pymysql
     pymysql.install_as_MySQLdb()
@@ -43,7 +44,7 @@ def create_app():
     app.config["SQLALCHEMY_ECHO"] = False
     app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://%s:%s@%s/%s" % \
                                             (os.environ.get("DATABASE_USERNAME"),
-                                             os.environ.get("DATABASE_PASSWORD"),
+                                             quote_plus(os.environ.get("DATABASE_PASSWORD", "")),
                                              os.environ.get("DATABASE_HOST"),
                                              os.environ.get("DATABASE_NAME"))
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

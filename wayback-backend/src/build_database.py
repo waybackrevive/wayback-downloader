@@ -2,6 +2,7 @@
 """Create all tables in db"""
 
 import os
+from urllib.parse import quote_plus
 import pymysql
 pymysql.install_as_MySQLdb()
 from config import app
@@ -13,7 +14,7 @@ def run():
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://%s:%s@%s/%s" % \
                                             (os.environ.get("DATABASE_USERNAME"),
-                                             os.environ.get("DATABASE_PASSWORD"),
+                                             quote_plus(os.environ.get("DATABASE_PASSWORD", "")),
                                              os.environ.get("DATABASE_HOST"),
                                              os.environ.get("DATABASE_NAME"))
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
