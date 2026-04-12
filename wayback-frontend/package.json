@@ -2,7 +2,8 @@
   "name": "wayback-frontend",
   "private": true,
   "scripts": {
-    "start": "elm-spa server"
+    "start": "elm-spa server",
+    "build": "elm-spa build"
   },
   "devDependencies": {
     "elm": "^0.19.1-6",
