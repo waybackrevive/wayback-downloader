@@ -53,9 +53,23 @@ class CognitoUser():
                   "username": username,
                   "password": password,
               })
+            client_record = get_client(username)
+            if client_record is None:
+                log.warning("No DB record found for (%s) - creating one now", username)
+                try:
+                    user_info = client.admin_get_user(
+                        UserPoolId=current_app.config.get("COGNITO_USERPOOL_ID"),
+                        Username=username
+                    )
+                    email = next((a["Value"] for a in user_info.get("UserAttributes", [])
+                                  if a["Name"] == "email"), "")
+                    CognitoUser.create_db_user(username, email)
+                    client_record = get_client(username)
+                except Exception as db_exc:
+                    log.error("Unable to auto-create DB record for (%s): %s", username, db_exc)
             return ProtobufResponse().success(HTTPStatus.OK,
                                        user={"is_subscribed": get_whop_subscription_status(username),
-                                             "is_admin": get_client(username).admin,
+                                             "is_admin": client_record.admin if client_record else False,
                                              "id_token": resp["AuthenticationResult"]["IdToken"]})
         except client.exceptions.NotAuthorizedException:
             log.warning("The username or password is incorrect for: %s", username)

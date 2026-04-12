@@ -188,15 +188,14 @@ viewMain model =
                     , div
                         [ Attr.class "col-md-12 button-submit"
                         ]
-                        [ case model.status of
-                            Loading ->
-                                viewSpinnerText "Confirming..."
-                            _ ->
-                                button
-                                    [ Attr.class "btn btn-primary"
-                                    , onClick ClickedConfirm
-                                    ]
-                                    [ text "Confirm Account" ]
+                        [ button
+                            [ Attr.class "btn btn-primary"
+                            , onClick ClickedConfirm
+                            ]
+                            (case model.status of
+                                Loading -> viewSpinnerText
+                                _ -> [ text "Confirm Account" ]
+                            )
                         ]
                     ]
                 ]
