@@ -56,11 +56,12 @@ def get_whop_subscription_status(username):
         period_end = data.get("renewal_period_end", 0)
         restores = Restore.query.filter(
             and_(
+                Restore.username == username,
                 Restore.transactDate >= period_start,
                 Restore.transactDate < period_end
             )
         ).all()
-        return len(restores) <= 10
+        return len(restores) < 10
     except Exception as exception:
         log.error("Unable to get Whop subscription status for %s: %s", username, exception)
         return False

@@ -2,6 +2,8 @@
 """Create all tables in db"""
 
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
 from config import app
 from model.orm import db, Status, Client
 

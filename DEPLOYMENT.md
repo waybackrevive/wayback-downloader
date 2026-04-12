@@ -224,19 +224,31 @@ ssh deploy@YOUR_VPS_IP
 sudo apt update && sudo apt upgrade -y
 ```
 
-## Step 5.2 — Install Docker
+## Step 5.2 — Install Docker + Compose plugin (official repo)
 
 ```bash
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER
-newgrp docker
+# Remove any old Docker packages from Ubuntu default repos
+sudo apt remove -y docker docker.io containerd runc
+
+# Add Docker's official apt repository
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker CE + Compose plugin
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Start Docker daemon and enable it on boot
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Verify both work
 docker --version
-```
-
-## Step 5.3 — Install Docker Compose plugin
-
-```bash
-sudo apt install -y docker-compose-plugin
 docker compose version
 ```
 
@@ -474,7 +486,7 @@ docker compose logs mysql
 ## Initialise the database schema
 
 ```bash
-docker compose exec wayback-backend python build_database.py
+docker compose exec wayback-backend python src/build_database.py
 ```
 
 ---

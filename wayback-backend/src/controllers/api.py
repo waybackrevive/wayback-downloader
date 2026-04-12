@@ -112,7 +112,7 @@ def send_email(subject, body, recipient, html=None, type="text",
                reply_to="Wayback Download Support <support@wayback.download>"):
     """Send email to user for order information using SES"""
     try:
-        client = boto3.client("ses", region_name="us-west-2")
+        client = boto3.client("ses", region_name=current_app.config.get("SES_REGION", "eu-north-1"))
         message = {"Subject": {"Data": subject}, "Body": {"Text": {"Data": body}}}
         if type == "html":
             message["Body"] = {"Text": {"Data": body}, "Html": {"Data": html}}
@@ -200,13 +200,18 @@ def process_api(body):
     period_start = membership.get("renewal_period_start", 0)
     period_end = membership.get("renewal_period_end", 0)
     restores = Restore.query.filter(
-        and_(Restore.transactDate >= period_start, Restore.transactDate < period_end)
+        and_(Restore.username == username,
+             Restore.transactDate >= period_start, Restore.transactDate < period_end)
     ).all()
     if len(restores) >= 10:
         return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY,
                                           error="You have reached the maximum number of restores for this billing period")
 
     session = WhopSession.query.filter(WhopSession.subscription == client.whopMembershipId).first()
+    if session is None:
+        log.error("No WhopSession found for membership %s", client.whopMembershipId)
+        return ProtobufResponse().failure(HTTPStatus.INTERNAL_SERVER_ERROR,
+                                          error="Subscription session not found, please contact support")
     restore = Restore(id=str(uuid4()), domain=cart.domain, timestamp=cart.timestamp,
                       sessionId=session.sessionId, username=username,
                       statusId=2, transactDate=int(time()))
