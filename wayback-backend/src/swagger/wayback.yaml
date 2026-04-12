@@ -1,0 +1,372 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Wayback Download
+consumes:
+  - application/json
+produces:
+  - application/json
+  - text/html
+
+basePath: /
+
+paths:
+  /contact:
+    post:
+        x-swagger-router-controller: src.controllers.api
+        operationId: contact_api
+        tags:
+        - User
+        consumes:
+        - application/protobuf
+        produces:
+        - application/protobuf
+        parameters:
+          - in: body
+            name: body
+            description: User to reset password for
+            schema:
+              type: object
+        responses:
+          200:
+            description: Success
+            headers:
+              Content-Type:
+                type: string
+  /login:
+    post:
+        x-swagger-router-controller: src.controllers.api
+        operationId: login_api
+        tags:
+        - User
+        consumes:
+        - application/protobuf
+        produces:
+        - application/protobuf
+        parameters:
+          - in: body
+            name: body
+            description: User to reset password for
+            schema:
+              type: object
+        responses:
+          200:
+            description: Success
+            headers:
+              Content-Type:
+                type: string
+  /user:
+    get:
+      x-swagger-router-controller: src.controllers.api
+      operationId: user_api
+      tags:
+        - User
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /restore:
+    get:
+      x-swagger-router-controller: src.controllers.api
+      operationId: restore_api
+      tags:
+        - User
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /restore/{sessionId}:
+    get:
+      x-swagger-router-controller: src.controllers.api
+      operationId: restore_by_session_api
+      tags:
+        - User
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /receipt:
+    get:
+      x-swagger-router-controller: src.controllers.api
+      operationId: receipt_api
+      tags:
+        - User
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /forgot-password:
+    post:
+        x-swagger-router-controller: src.controllers.api
+        operationId: forgot_password_api
+        tags:
+        - User
+        consumes:
+        - application/protobuf
+        produces:
+        - application/protobuf
+        parameters:
+          - in: body
+            name: body
+            description: User to reset password for
+            schema:
+              type: object
+        responses:
+          200:
+            description: Success
+            headers:
+              Content-Type:
+                type: string
+  /forgot-password-confirm:
+    post:
+        x-swagger-router-controller: src.controllers.api
+        operationId: forgot_password_confirm_api
+        tags:
+        - User
+        consumes:
+        - application/protobuf
+        produces:
+        - application/protobuf
+        parameters:
+          - in: body
+            name: body
+            description: User to reset password for
+            schema:
+              type: object
+        responses:
+          200:
+            description: Success
+            headers:
+              Content-Type:
+                type: string
+  /checkout:
+    post:
+      x-swagger-router-controller: src.controllers.api
+      operationId: checkout_api
+      tags:
+      - Whop
+      consumes:
+      - application/protobuf
+      produces:
+      - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+
+  /subscription-checkout-session:
+    post:
+      x-swagger-router-controller: src.controllers.api
+      operationId: subscription_checkout_session_api
+      tags:
+        - Whop
+      consumes:
+      - application/protobuf
+      produces:
+      - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /webhook:
+    post:
+      x-swagger-router-controller: src.controllers.api
+      operationId: webhook_api
+      tags:
+      - Whop
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /process:
+    post:
+      x-swagger-router-controller: src.controllers.api
+      operationId: process_api
+      tags:
+      - Cart
+      consumes:
+      - application/protobuf
+      produces:
+      - application/protobuf
+      parameters:
+        - in: body
+          name: body
+          description: Item to be restores
+          schema:
+              type: object
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+  /signup:
+    post:
+      x-swagger-router-controller: src.controllers.api
+      operationId: signup_api
+      tags:
+      - User
+      consumes:
+      - application/protobuf
+      produces:
+      - application/protobuf
+      parameters:
+        - in: body
+          name: body
+          description: User to create
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string
+  /admin/restores:
+    get:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: restores
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string
+
+  /admin/restore/{id}:
+    get:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: restore_id
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: restore ID
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string
+
+  /admin/queue:
+    post:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: queue
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      parameters:
+        - in: body
+          name: body
+          description: Message to add to queue
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string
+  /admin/update:
+    post:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: update_restore
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      parameters:
+        - in: body
+          name: body
+          description: Restore object to update
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string

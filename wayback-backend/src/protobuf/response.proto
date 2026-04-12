@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+enum Status {
+  SUCCESS = 0;
+  FAILED = 1;
+}
+
+message Response {
+  string error = 1;
+  Status status = 2;
+  Data data = 3;
+}
+
+message Data {
+  User user = 1;
+  string id = 2;
+  string url = 3;
+  string info = 4;
+  repeated Receipt receipts = 5;
+  repeated Restore restores = 6;
+  Restore restore = 7;
+}
+
+
+message Receipt {
+  string id = 1;
+  string url = 2;
+  string date = 3;
+  string amount = 4;
+}
+
+message Restore {
+  string id = 1;
+  string timestamp = 2;
+  string domain = 3;
+  string status = 4;
+  string s3Url = 5;
+  string transactDate = 6;
+  string username = 7;
+  string email = 8;
+}
+
+message User {
+  string token = 1;
+  bool subscribed = 2;
+  bool admin = 3;
+}
+
+message CartItem {
+  string timestamp = 1;
+  string domain = 2;
+}
+
+message Cart {
+  repeated CartItem items = 1;
+}
+
+message ContactForm {
+  string email = 1;
+  string message = 2;
+  string name = 3;
+  string recaptcha = 4;
+}
+
+message ForgotPasswordForm {
+  string recaptcha = 1;
+  string username = 2;
+}
+
+message ForgotPasswordConfirmForm {
+  string recaptcha = 1;
+  string username = 2;
+  string token = 3;
+  string password = 4;
+}
+
+message LoginForm {
+  string username = 1;
+  string password = 2;
+  string recaptcha = 3;
+}
+
+message SignupForm {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+  string recaptcha = 4;
+}
+
+message QueueForm {
+  string domain = 1;
+  string timestamp = 2;
+  string restoreId = 3;
+  string email = 4;
+  string action = 5;
+  string method = 6;
+}

@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            python: 3.8
+        commands:
+            - pip install pylint==2.4.4 pytest coverage
+            - pip install -r requirements.txt
+    pre_build:
+        commands:
+            - echo "[+] Running Pylint..."
+            - pylint src/lambda_function.py --exit-zero
+    build:
+        commands:
+            - echo "[+] Installing python dependencies...."
+            - pip install -r requirements.txt -t ./package
+            - cd package
+            - zip -r9 ${OLDPWD}/src/function.zip .
+            - cd ${OLDPWD}/src
+            - zip -g function.zip waybackpack/*
+            - zip -g function.zip logging.yaml
+            - zip -g function.zip lambda_function.py
+            - echo "[+] Deploying to Lambda...."
+            - aws lambda update-function-code --function-name wayback-backend --region=us-west-2 --zip-file fileb://function.zip
