@@ -87,6 +87,11 @@ message SignupForm {
   string recaptcha = 4;
 }
 
+message ConfirmSignupForm {
+  string username = 1;
+  string code = 2;
+}
+
 message QueueForm {
   string domain = 1;
   string timestamp = 2;

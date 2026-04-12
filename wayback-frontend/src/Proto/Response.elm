@@ -68,6 +68,48 @@ type alias QueueForm =
     { domain : String, timestamp : String, restoreId : String, email : String, action : String, method : String }
 
 
+{-| Default for ConfirmSignupForm. Should only be used for 'required' decoders as an initial value.
+
+
+-}
+defaultConfirmSignupForm : ConfirmSignupForm
+defaultConfirmSignupForm =
+    { username = "", code = "" }
+
+
+{-| Decode a `ConfirmSignupForm` from Bytes
+
+
+-}
+decodeConfirmSignupForm : Protobuf.Decode.Decoder ConfirmSignupForm
+decodeConfirmSignupForm =
+    Protobuf.Decode.message
+        defaultConfirmSignupForm
+        [ Protobuf.Decode.optional 1 Protobuf.Decode.string (\a r -> { r | username = a })
+        , Protobuf.Decode.optional 2 Protobuf.Decode.string (\a r -> { r | code = a })
+        ]
+
+
+{-| Encode a `ConfirmSignupForm` to Bytes
+
+
+-}
+encodeConfirmSignupForm : ConfirmSignupForm -> Protobuf.Encode.Encoder
+encodeConfirmSignupForm value =
+    Protobuf.Encode.message
+        [ ( 1, Protobuf.Encode.string value.username )
+        , ( 2, Protobuf.Encode.string value.code )
+        ]
+
+
+{-| `ConfirmSignupForm` message
+
+
+-}
+type alias ConfirmSignupForm =
+    { username : String, code : String }
+
+
 {-| Default for SignupForm. Should only be used for 'required' decoders as an initial value.
 
 

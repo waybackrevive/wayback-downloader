@@ -168,6 +168,28 @@ paths:
             headers:
               Content-Type:
                 type: string
+  /confirm-signup:
+    post:
+        x-swagger-router-controller: src.controllers.api
+        operationId: confirm_signup_api
+        tags:
+        - User
+        consumes:
+        - application/protobuf
+        produces:
+        - application/protobuf
+        parameters:
+          - in: body
+            name: body
+            description: Verification code to confirm signup
+            schema:
+              type: object
+        responses:
+          200:
+            description: Success
+            headers:
+              Content-Type:
+                type: string
   /checkout:
     post:
       x-swagger-router-controller: src.controllers.api

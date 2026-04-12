@@ -7,6 +7,7 @@ import Common.Regex exposing (emailRegex)
 import Common.Spinner exposing (viewSpinnerText)
 import Common.CustomHttp as CustomHttp
 import Environment exposing (EnvironmentVar)
+import Gen.Route
 import Html exposing (Html, a, button, div, h5, i, input, main_, p, section, text)
 import Html.Attributes as Attr
 import Html.Events exposing (onClick, onInput)
@@ -21,10 +22,10 @@ import View exposing (View)
 
 
 page : Shared.Model -> Request -> Page.With Model Msg
-page shared _ =
+page shared req =
     Page.element
         { init = init
-        , update = update shared
+        , update = update shared req
         , view = view shared
         , subscriptions = subscriptions
         }
@@ -69,8 +70,8 @@ signup env model =
     )
 
 
-update: Shared.Model -> Msg -> Model -> (Model, Cmd Msg)
-update shared msg model =
+update: Shared.Model -> Request -> Msg -> Model -> (Model, Cmd Msg)
+update shared req msg model =
     case msg of
         ClickedRegister ->
             if model.form.username == "" then
@@ -124,13 +125,9 @@ update shared msg model =
                 Ok resp ->
                     case resp.status of
                         Proto.Status_FAILED ->
-                            ( { model | status = Failure resp.error }, Cmd.none)
+                            ( { model | status = Failure resp.error }, Shared.resetCaptcha ())
                         _ ->
-                            case resp.data of
-                                Just data ->
-                                    ((Model (Proto.SignupForm "" "" "" "") (Success data.info) False), Shared.resetCaptcha ())
-                                Nothing ->
-                                    ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
+                            ( model, Cmd.batch [ Shared.resetCaptcha (), Request.replaceRoute (Gen.Route.ConfirmSignup__Username_ { username = model.form.username }) req ] )
                 Err _ ->
                     ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
 

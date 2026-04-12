@@ -61,6 +61,16 @@ def signup_api(body):
         return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY, error="Invalid body sent")
 
 
+def confirm_signup_api(body):
+    """Handle confirm signup event (verify email code sent by Cognito)"""
+    form = response_pb2.ConfirmSignupForm()
+    form.ParseFromString(body)
+    if form.IsInitialized() and form.username != "" and form.code != "":
+        return CognitoUser.confirm_signup(form.username, form.code)
+    else:
+        return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY, error="Invalid body sent")
+
+
 def forgot_password_api(body):
     """Handle forgot password event"""
     form = response_pb2.ForgotPasswordForm()

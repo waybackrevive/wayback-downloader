@@ -115,7 +115,39 @@ class CognitoUser():
                 error=str(exception).replace("\n", " "))
         log.info("Successfully created user (%s)", username)
         return ProtobufResponse().success(status=HTTPStatus.CREATED,
-            info="Please confirm your signup, check your email for the validation URL")
+            info="Please check your email for a verification code to confirm your account")
+
+    @staticmethod
+    def confirm_signup(username, code):
+        """Confirm user signup with Cognito verification code"""
+        client = boto3.client("cognito-idp", region_name=current_app.config.get("COGNITO_REGION"))
+        try:
+            client.confirm_sign_up(
+                ClientId=current_app.config.get("COGNITO_APP_CLIENT_ID"),
+                SecretHash=CognitoUser.get_secret_hash(username),
+                Username=username,
+                ConfirmationCode=code,
+                ForceAliasCreation=False
+            )
+            log.info("Successfully confirmed user (%s)", username)
+            return ProtobufResponse().success(status=HTTPStatus.OK,
+                info="Account confirmed! You can now login.")
+        except client.exceptions.CodeMismatchException:
+            return ProtobufResponse().failure(status=HTTPStatus.UNPROCESSABLE_ENTITY,
+                error="Invalid verification code")
+        except client.exceptions.ExpiredCodeException:
+            return ProtobufResponse().failure(status=HTTPStatus.UNPROCESSABLE_ENTITY,
+                error="Verification code has expired, please sign up again")
+        except client.exceptions.UserNotFoundException:
+            return ProtobufResponse().failure(status=HTTPStatus.UNPROCESSABLE_ENTITY,
+                error="User not found")
+        except client.exceptions.NotAuthorizedException:
+            return ProtobufResponse().failure(status=HTTPStatus.UNPROCESSABLE_ENTITY,
+                error="User is already confirmed")
+        except Exception as exception:
+            log.error(exception)
+            return ProtobufResponse().failure(status=HTTPStatus.BAD_REQUEST,
+                error=str(exception).replace("\n", " "))
 
     @staticmethod
     def delete_cognito_user(username, access_token):
