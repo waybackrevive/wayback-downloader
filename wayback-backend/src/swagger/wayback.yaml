@@ -178,6 +178,12 @@ paths:
       - application/protobuf
       produces:
       - application/protobuf
+      parameters:
+        - in: body
+          name: body
+          description: Cart to checkout
+          schema:
+            type: object
       responses:
         200:
           description: Success
