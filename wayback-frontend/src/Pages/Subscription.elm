@@ -298,26 +298,6 @@ viewSection1 env user model =
         ]
 
 
-import Browser.Navigation exposing (load)
-import Common.Alert exposing (viewAlertError)
-import Common.CustomHttp as CustomHttp
-import Common.Footer exposing (viewFooter)
-import Common.Header exposing (viewHeader)
-import Common.Response exposing (Response, responseDecoder)
-import Domain.User exposing (User)
-import Environment exposing (EnvironmentVar)
-import Html exposing (Html, a, div, h3, h5, i, li, main_, section, small, span, text, ul)
-import Html.Attributes as Attr
-import Html.Events exposing (onClick)
-import Http
-import Page
-import Proto.Response as Proto
-import Request exposing (Request)
-import Shared
-import Storage exposing (Storage)
-import View exposing (View)
-
-
 page : Shared.Model -> Request -> Page.With Model Msg
 page shared _ =
     Page.protected.element <|
