@@ -271,7 +271,7 @@ def checkout_api(body):
                     "initial_price": total_price,
                     "plan_type": "one_time"
                 },
-                "metadata": {"session_id": session_id, "username": username or "", "items": items_meta},
+                "metadata": {"session_id": session_id, "username": username or "", "items": json.dumps(items_meta)},
                 "redirect_url": redirect_url
             },
             timeout=30
