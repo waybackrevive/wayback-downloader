@@ -262,11 +262,10 @@ def checkout_api(body):
 
     try:
         whop_resp = requests.post(
-            "https://api.whop.com/api/v5/checkout/links",
+            "https://api.whop.com/api/v1/checkout_configurations",
             headers=_whop_headers(),
             json={
-                "plan_id": current_app.config.get("WHOP_SINGLE_PLAN_ID"),
-                "initial_price": total_price,
+                "plan": {"initial_price": total_price, "plan_type": "one_time"},
                 "metadata": {"session_id": session_id, "username": username or "", "items": items_meta},
                 "redirect_url": redirect_url
             },
@@ -280,7 +279,7 @@ def checkout_api(body):
 
     add_websites(cart, username, session_id)
     add_whop_session(session_id, checkout_data["id"], username)
-    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["url"])
+    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["purchase_url"])
 
 
 @cognito_auth_header_required_api
@@ -292,7 +291,7 @@ def subscription_checkout_session_api():
 
     try:
         whop_resp = requests.post(
-            "https://api.whop.com/api/v5/checkout/links",
+            "https://api.whop.com/api/v1/checkout_configurations",
             headers=_whop_headers(),
             json={
                 "plan_id": current_app.config.get("WHOP_SUBSCRIPTION_PLAN_ID"),
@@ -308,7 +307,7 @@ def subscription_checkout_session_api():
         return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error=str(exception))
 
     add_whop_session(session_id, checkout_data["id"], username)
-    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["url"])
+    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["purchase_url"])
 
 
 @cognito_auth_header_required_api

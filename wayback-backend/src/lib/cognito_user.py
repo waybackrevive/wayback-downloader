@@ -40,19 +40,14 @@ class CognitoUser():
         try:
             client = boto3.client("cognito-idp",
                 region_name=current_app.config.get("COGNITO_REGION"))
-            resp = client.admin_initiate_auth(
-                UserPoolId=current_app.config.get("COGNITO_USERPOOL_ID"),
+            resp = client.initiate_auth(
                 ClientId=current_app.config.get("COGNITO_APP_CLIENT_ID"),
-                AuthFlow="ADMIN_NO_SRP_AUTH",
+                AuthFlow="USER_PASSWORD_AUTH",
                 AuthParameters={
                     "USERNAME": username,
                     "SECRET_HASH": CognitoUser.get_secret_hash(username),
                     "PASSWORD": password,
-                },
-                ClientMetadata={
-                  "username": username,
-                  "password": password,
-              })
+                })
             client_record = get_client(username)
             if client_record is None:
                 log.warning("No DB record found for (%s) - creating one now", username)
