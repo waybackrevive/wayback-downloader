@@ -265,7 +265,12 @@ def checkout_api(body):
             "https://api.whop.com/api/v1/checkout_configurations",
             headers=_whop_headers(),
             json={
-                "plan": {"initial_price": total_price, "plan_type": "one_time"},
+                "plan": {
+                    "company_id": current_app.config.get("WHOP_COMPANY_ID"),
+                    "currency": "usd",
+                    "initial_price": total_price,
+                    "plan_type": "one_time"
+                },
                 "metadata": {"session_id": session_id, "username": username or "", "items": items_meta},
                 "redirect_url": redirect_url
             },
@@ -273,6 +278,10 @@ def checkout_api(body):
         )
         whop_resp.raise_for_status()
         checkout_data = whop_resp.json()
+    except requests.exceptions.HTTPError as exception:
+        log.error("Unable to create Whop checkout: %s — response body: %s",
+                  exception, exception.response.text if exception.response is not None else "")
+        return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error="Unable to create checkout")
     except Exception as exception:
         log.error("Unable to create Whop checkout: %s", exception)
         return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error="Unable to create checkout")
@@ -302,9 +311,13 @@ def subscription_checkout_session_api():
         )
         whop_resp.raise_for_status()
         checkout_data = whop_resp.json()
+    except requests.exceptions.HTTPError as exception:
+        log.error("Unable to create Whop subscription checkout: %s — response body: %s",
+                  exception, exception.response.text if exception.response is not None else "")
+        return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error="Unable to create checkout")
     except Exception as exception:
         log.error("Unable to create Whop subscription checkout: %s", exception)
-        return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error=str(exception))
+        return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error="Unable to create checkout")
 
     add_whop_session(session_id, checkout_data["id"], username)
     return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["purchase_url"])

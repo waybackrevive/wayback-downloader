@@ -69,6 +69,8 @@
    - Name: `wayback-app`
    - Client secret: **Generate a client secret** ✅
    - Auth flows: enable `ALLOW_USER_PASSWORD_AUTH` and `ALLOW_REFRESH_TOKEN_AUTH`
+
+   > **Critical:** If the pool already exists, go to: Cognito → User Pools → App clients → click `wayback-app` → **Edit** → tick `ALLOW_USER_PASSWORD_AUTH` → **Save changes**. Login will fail with `InvalidParameterException` without this.
 4. **Region: `eu-north-1`** — this is hardcoded in the app. ✅ Already done.
 5. ✅ **Already created** — User pool ID: `eu-north-1_b1rL6aco4`
 6. **SAVE:**
@@ -146,6 +148,7 @@
 3. Create product: **"Wayback Bulk Subscription"**
    - Add a **recurring plan** → price `$95/month`
    - Note the Plan ID → this is `WHOP_SUBSCRIPTION_PLAN_ID`
+4. **Get your Company ID:** Whop → **Settings → Company** → copy the **Company ID** (format: `biz_XXXX`) → this is `WHOP_COMPANY_ID`
 
 ## Step 2.2 — Get API Key
 
@@ -346,6 +349,7 @@ COGNITO_APP_CLIENT_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXX
 # ── Whop (payments) ───────────────────────────────────
 WHOP_API_KEY=whop_sk_XXXXXXXXXXXX
 WHOP_WEBHOOK_SECRET=whsec_XXXXXXXXXXXX
+WHOP_COMPANY_ID=biz_XXXXXXXXXXXX
 WHOP_SINGLE_PLAN_ID=plan_XXXXXXXXXXXX
 WHOP_SUBSCRIPTION_PLAN_ID=plan_XXXXXXXXXXXX
 APP_DOMAIN=https://wayback.download
@@ -726,8 +730,8 @@ docker compose -f /opt/wayback/docker-compose.yml exec mysql mysql -u wayback -p
 | `python3.11` not found on server | Host doesn't need Python — it runs in Docker | Skip host Python install. Use `docker compose up`. |
 | Website not loading | DNS not propagated yet | Wait 30 min, check intodns.com |
 | 502 Bad Gateway on API | Backend container down | `docker compose logs wayback-backend` |
-| Login fails | Cognito misconfigured | Check all `COGNITO_*` values in `.env` |
-| Payment page doesn't load | Whop plan IDs wrong | Check `WHOP_SINGLE_PLAN_ID` and `WHOP_SUBSCRIPTION_PLAN_ID` |
+| Login fails | Cognito misconfigured | Check all `COGNITO_*` values in `.env`. Also verify `ALLOW_USER_PASSWORD_AUTH` is enabled on the Cognito app client (Cognito → App clients → Edit → tick the checkbox → Save) |
+| Payment page doesn't load | Whop config wrong | Check `WHOP_API_KEY`, `WHOP_COMPANY_ID`, and `WHOP_SUBSCRIPTION_PLAN_ID` in `.env`. `WHOP_COMPANY_ID` must be your `biz_XXXX` company ID from Whop Settings → Company |
 | No emails sent | SES still in sandbox | Request production access in SES console |
 | Restore job stuck "In Progress" | SQS name/region wrong | Check `SQS_NAME` and `SQS_REGION` in `.env` |
 | SSL cert fails | DNS not pointing to VPS yet | Confirm A records are set, wait for propagation |

@@ -227,7 +227,9 @@ class CognitoUser():
             "response": token, "sitekey": current_app.config.get("HCAPTCHA_SITE_KEY")}
         try:
             response = requests.post(url, data=params).json()
-            return response["success"]
+            if not response.get("success"):
+                log.warning("hCaptcha validation failed — error-codes: %s", response.get("error-codes"))
+            return response.get("success", False)
         except Exception as exception:
             log.warning("Unable to validate hcaptcha with token (%s): %s", token, exception)
             return False
