@@ -145,7 +145,7 @@ update shared msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Recover Any Website from archive.org — Starting at $19 | Wayback Download"
+    { title = "Recover Any Website from archive.org — Starting at $29 | Wayback Download"
     , body = [ viewHeader shared.storage.user "main" model.domain (viewMain model) (viewModal model) ClickedToggleMenu model.showMenu
              , viewSection1
              , viewSection2 shared.env
@@ -446,7 +446,7 @@ viewSection2 env =
                             , li []
                                 [ text "Up to 20,000 pages or 10 GB" ]
                             , li []
-                                [ text "Additional domains: $12 each" ]
+                                [ text "Additional domains: $19 each" ]
                             ]
                         , a
                             [ Attr.class "second-pricing-table-button"
@@ -475,7 +475,7 @@ viewSection2 env =
                             [ i
                                 [ Attr.class "monthly"
                                 ]
-                                [ text "$70", small []
+                                [ text "$89", small []
                                     [ text "/domain" ]
                                 ]
                             ]
@@ -520,7 +520,7 @@ viewSection2 env =
                             [ i
                                 [ Attr.class "monthly"
                                 ]
-                                [ text ("$" ++ String.fromInt env.subscriptionCost), small []
+                                [ text ("from $" ++ String.fromInt env.basicSubscriptionCost), small []
                                     [ text "/mo" ]
                                 ]
                             ]
@@ -528,25 +528,23 @@ viewSection2 env =
                             [ Attr.class "second-pricing-table-body"
                             ]
                             [ li []
-                                [ text "Up to 10 HTML restores/month" ]
+                                [ text "Basic: up to 12 HTML restores/month" ]
                             , li []
-                                [ text "Priority processing" ]
+                                [ text "Premium: up to 100 restores/month" ]
+                            , li []
+                                [ text "Priority order processing" ]
                             , li []
                                 [ text "Configurable link creation" ]
                             , li []
-                                [ text "Discounted WordPress conversion ($55)" ]
+                                [ text "Discounted WordPress conversion" ]
                             , li []
                                 [ text "Email support included" ]
-                            , div
-                                [ Attr.id "flex-premium"
-                                ]
-                                []
                             ]
                         , a
                             [ Attr.class "second-pricing-table-button"
                             , Attr.href (Route.toHref Route.Subscription )
                             ]
-                            [ text "Subscribe" ]
+                            [ text "See Plans" ]
                         ]
                     ]
                 ]

@@ -52,6 +52,7 @@ def create_app():
     app.config["WHOP_WEBHOOK_SECRET"] = os.environ.get("WHOP_WEBHOOK_SECRET")
     app.config["WHOP_COMPANY_ID"] = os.environ.get("WHOP_COMPANY_ID")
     app.config["WHOP_SINGLE_PLAN_ID"] = os.environ.get("WHOP_SINGLE_PLAN_ID")
+    app.config["WHOP_BASIC_PLAN_ID"] = os.environ.get("WHOP_BASIC_PLAN_ID")
     app.config["WHOP_SUBSCRIPTION_PLAN_ID"] = os.environ.get("WHOP_SUBSCRIPTION_PLAN_ID")
     app.config["APP_DOMAIN"] = os.environ.get("APP_DOMAIN")
     app.config["SQS_NAME"] = os.environ.get("SQS_NAME")

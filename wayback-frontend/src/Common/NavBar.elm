@@ -2,13 +2,15 @@ module Common.NavBar exposing (viewNavbar)
 
 import Domain.User exposing (User)
 import Gen.Route as Route
-import Html exposing (Html, a, button, div, img, li, nav, span, text, ul)
-import Html.Attributes as Attr exposing (alt, attribute, class, href, id, src)
+import Html exposing (Html, a, button, div, img, li, nav, p, span, strong, text, ul)
+import Html.Attributes as Attr exposing (alt, attribute, class, href, id, src, style)
 import Html.Events exposing (onClick)
 
 viewNavbar: Maybe User -> msg -> Bool -> Html msg
 viewNavbar user clickedToggleMenu showMenu =
-    nav
+    div []
+        [ viewAnnouncementBanner
+        , nav
         [ class "navbar navbar-expand-md fixed-header-layout"
         , id "coodiv-navbar-header"
         , if showMenu then
@@ -68,6 +70,26 @@ viewNavbar user clickedToggleMenu showMenu =
                     ]
                 ]
             ]
+        ]
+        ]
+
+viewAnnouncementBanner : Html msg
+viewAnnouncementBanner =
+    div
+        [ style "background" "linear-gradient(90deg, #6c3fe0 0%, #9b59b6 100%)"
+        , style "color" "#fff"
+        , style "text-align" "center"
+        , style "padding" "10px 20px"
+        , style "font-size" "14px"
+        , style "font-weight" "500"
+        , style "letter-spacing" "0.3px"
+        , style "z-index" "9999"
+        , style "position" "relative"
+        ]
+        [ strong [] [ text "We're back! " ]
+        , text "Wayback Download is back online. Recover any website from archive.org — "
+        , strong [] [ text "starting at $29." ]
+        , text " Thank you for your patience!"
         ]
 
 navList: List(Html msg)

@@ -223,6 +223,13 @@ paths:
       - application/protobuf
       produces:
       - application/protobuf
+      parameters:
+        - name: plan
+          in: query
+          required: false
+          type: string
+          default: "premium"
+          enum: ["basic", "premium"]
       responses:
         200:
           description: Success

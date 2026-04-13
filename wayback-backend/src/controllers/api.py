@@ -255,7 +255,7 @@ def checkout_api(body):
 
     session_id = str(uuid4())
     n = len(cart.items)
-    total_price = 19.00 + (n - 1) * 12.00 if n > 1 else 19.00
+    total_price = 29.00 + (n - 1) * 19.00 if n > 1 else 29.00
     items_meta = [{"domain": i.domain, "timestamp": i.timestamp} for i in cart.items]
     redirect_url = ("%s/dashboard" % current_app.config.get("APP_DOMAIN")
                     if client else "%s/success/%s" % (current_app.config.get("APP_DOMAIN"), session_id))
@@ -292,18 +292,23 @@ def checkout_api(body):
 
 
 @cognito_auth_header_required_api
-def subscription_checkout_session_api():
-    """Create a Whop checkout link for subscription purchase ($95/mo)"""
+def subscription_checkout_session_api(plan="premium"):
+    """Create a Whop checkout link for subscription purchase (basic $39/mo or premium $95/mo)"""
     username = g.cogauth_username
     session_id = str(uuid4())
     redirect_url = "%s/subscription" % current_app.config.get("APP_DOMAIN")
+
+    if plan == "basic":
+        plan_id = current_app.config.get("WHOP_BASIC_PLAN_ID")
+    else:
+        plan_id = current_app.config.get("WHOP_SUBSCRIPTION_PLAN_ID")
 
     try:
         whop_resp = requests.post(
             "https://api.whop.com/api/v1/checkout_configurations",
             headers=_whop_headers(),
             json={
-                "plan_id": current_app.config.get("WHOP_SUBSCRIPTION_PLAN_ID"),
+                "plan_id": plan_id,
                 "metadata": {"session_id": session_id, "username": username},
                 "redirect_url": redirect_url
             },
