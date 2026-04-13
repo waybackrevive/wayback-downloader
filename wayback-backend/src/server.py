@@ -50,6 +50,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["WHOP_API_KEY"] = os.environ.get("WHOP_API_KEY")
     app.config["WHOP_WEBHOOK_SECRET"] = os.environ.get("WHOP_WEBHOOK_SECRET")
+    app.config["WHOP_COMPANY_ID"] = os.environ.get("WHOP_COMPANY_ID")
     app.config["WHOP_SINGLE_PLAN_ID"] = os.environ.get("WHOP_SINGLE_PLAN_ID")
     app.config["WHOP_SUBSCRIPTION_PLAN_ID"] = os.environ.get("WHOP_SUBSCRIPTION_PLAN_ID")
     app.config["APP_DOMAIN"] = os.environ.get("APP_DOMAIN")
