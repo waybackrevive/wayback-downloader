@@ -401,7 +401,8 @@ viewSection1 =
 viewSection2: EnvironmentVar -> Html Msg
 viewSection2 env =
     section
-        [ Attr.class "padding-100-0 position-relative"
+        [ Attr.id "pricing"
+        , Attr.class "padding-100-0 position-relative"
         ]
         [ div
             [ Attr.class "container"
