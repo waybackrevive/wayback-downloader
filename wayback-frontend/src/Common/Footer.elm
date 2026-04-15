@@ -65,11 +65,11 @@ viewFooter year =
                         [ li []
                             [ a [ Attr.href "/website-recovery" ] [ text "Website Recovery" ] ]
                         , li []
-                            [ a [ Attr.href "/expired-domain-recovery" ] [ text "Expired Domain Recovery" ] ]
+                            [ a [ Attr.href "/expired-domain-recovery" ] [ text "Expired Domains" ] ]
                         , li []
                             [ a [ Attr.href "/pbn-restoration" ] [ text "PBN Restoration" ] ]
                         , li []
-                            [ a [ Attr.href "/subscription" ] [ text "Bulk Subscription Plans" ] ]
+                            [ a [ Attr.href "/subscription" ] [ text "Subscription Plans" ] ]
                         ]
                     ]
                 -- Column 3: Company

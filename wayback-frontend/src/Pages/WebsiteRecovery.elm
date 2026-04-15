@@ -2,7 +2,7 @@ module Pages.WebsiteRecovery exposing (Model, Msg, page)
 
 import Common.Header exposing (viewHeader)
 import Common.Footer exposing (viewFooter)
-import Html exposing (Html, a, br, div, h1, h2, h3, i, li, main_, p, section, text, ul)
+import Html exposing (Html, a, br, div, h1, h2, h3, h5, i, li, main_, p, section, text, ul)
 import Html.Attributes as Attr
 import Page
 import Request exposing (Request)
@@ -92,7 +92,7 @@ viewSection1 =
                         [ text "Did your website disappear? Whether it was accidentally deleted, your hosting expired, or your developer went dark — the Internet Archive's Wayback Machine has likely captured your site." ]
                     , p []
                         [ text "Wayback Download transforms those archived snapshots into a fully functional website — all HTML, CSS, JavaScript, images and fonts restored, every URL rewritten, and archive.org headers stripped clean. You receive a zip file ready to upload to any hosting platform." ]
-                    , h3 []
+                    , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "What's Included in Every Website Recovery" ]
                     , ul []
                         [ li [] [ text "All HTML pages recovered with original content intact" ]
@@ -115,7 +115,7 @@ viewSection1 =
                     [ div
                         [ Attr.class "second-pricing-table"
                         ]
-                        [ h3
+                        [ h5
                             [ Attr.class "second-pricing-table-title"
                             ]
                             [ text "HTML Recovery", br [] [], text "$29 per domain" ]
@@ -162,10 +162,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-bolt fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Fast Turnaround" ]
                         , p []
                             [ text "Most recoveries are completed and delivered within 24 hours. We process orders in the queue so your site comes back quickly." ]
@@ -179,10 +178,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-tag fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "One Flat Fee" ]
                         , p []
                             [ text "No surprise bills. Pay $29 for the first domain and $19 for each additional domain on the same order. For regular use, check our subscription plans." ]
@@ -196,10 +194,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-server fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Host-Ready Files" ]
                         , p []
                             [ text "We strip all archive.org headers and rewrite every internal URL so your restored site works on any hosting — no extra configuration needed." ]

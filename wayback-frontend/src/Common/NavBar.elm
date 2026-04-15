@@ -94,34 +94,23 @@ viewAnnouncementBanner =
 navList: List(Html msg)
 navList =
     [ li [ class "nav-item" ]
-            [ a [ class "nav-link", href (Route.toHref Route.Home_ ) ]
+            [ a [ class "nav-link", href (Route.toHref Route.Home_) ]
                 [ text "Home" ]
             ]
-        , li [ class "nav-item dropdown" ]
-            [ a [ class "nav-link dropdown-toggle"
-                , href "#"
-                , attribute "data-toggle" "dropdown"
-                , attribute "role" "button"
-                , attribute "aria-haspopup" "true"
-                , attribute "aria-expanded" "false"
-                ]
+        , li [ class "nav-item" ]
+            [ a [ class "nav-link", href (Route.toHref Route.WebsiteRecovery) ]
                 [ text "Services" ]
-            , div [ class "dropdown-menu" ]
-                [ a [ class "dropdown-item", href "/website-recovery" ] [ text "Website Recovery" ]
-                , a [ class "dropdown-item", href "/expired-domain-recovery" ] [ text "Expired Domain Recovery" ]
-                , a [ class "dropdown-item", href "/pbn-restoration" ] [ text "PBN Restoration" ]
-                ]
             ]
         , li [ class "nav-item" ]
-            [ a [ class "nav-link", href (Route.toHref Route.Subscription ) ]
+            [ a [ class "nav-link", href (Route.toHref Route.Home_) ]
                 [ text "Pricing" ]
             ]
         , li [ class "nav-item" ]
-            [ a [ class "nav-link", href (Route.toHref Route.Knowledgebase ) ]
+            [ a [ class "nav-link", href (Route.toHref Route.Knowledgebase) ]
                 [ text "Help" ]
             ]
         , li [ class "nav-item" ]
-            [ a [ class "nav-link", href (Route.toHref Route.Contact ) ]
+            [ a [ class "nav-link", href (Route.toHref Route.Contact) ]
                 [ text "Contact" ]
             ]
     ]

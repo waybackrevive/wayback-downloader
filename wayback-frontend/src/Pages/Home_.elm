@@ -1057,7 +1057,7 @@ viewSectionHowItWorks =
                             [ Attr.class "h-flaticon-011-globe-2"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "1. Enter Your Domain" ]
                         , p []
                             [ text "Type the domain you want to recover in the search box above — e.g. example.com. We find every archived snapshot available in the Wayback Machine." ]
@@ -1073,7 +1073,7 @@ viewSectionHowItWorks =
                             [ Attr.class "h-flaticon-014-calendar"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "2. Pick a Snapshot" ]
                         , p []
                             [ text "Browse ", a [ Attr.href "https://web.archive.org/", Attr.target "_blank" ] [ text "web.archive.org" ], text " and choose the best archived version of your site. Any year, any date — you decide." ]
@@ -1089,7 +1089,7 @@ viewSectionHowItWorks =
                             [ Attr.class "h-flaticon-008-upload"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "3. Receive & Go Live" ]
                         , p []
                             [ text "Paste the snapshot URL, pay $29 flat, and receive a clean zip by email — all URLs rewritten, archive headers stripped, ready to upload to any host." ]
@@ -1126,7 +1126,7 @@ viewSectionWhoIsItFor =
                             , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Business Owners" ]
                         , p []
                             [ text "Your website was deleted, hacked, or your developer disappeared. We restore it from archive.org so your business is back online fast — no technical skills needed." ]
@@ -1143,7 +1143,7 @@ viewSectionWhoIsItFor =
                             , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "SEO & PBN Managers" ]
                         , p []
                             [ text "Restore expired domains at scale. Our bulk subscription covers up to 100 HTML restores per month — ideal for rebuilding PBN assets and link networks." ]
@@ -1164,7 +1164,7 @@ viewSectionWhoIsItFor =
                             , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Web Developers & Agencies" ]
                         , p []
                             [ text "Recover client sites quickly and hand off clean, host-ready files. ZIP delivered by email with all internal links rewritten and archive.org wrapper stripped." ]

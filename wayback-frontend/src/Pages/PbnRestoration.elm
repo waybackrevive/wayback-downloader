@@ -2,7 +2,7 @@ module Pages.PbnRestoration exposing (Model, Msg, page)
 
 import Common.Header exposing (viewHeader)
 import Common.Footer exposing (viewFooter)
-import Html exposing (Html, a, br, div, h1, h2, h3, i, li, main_, p, section, text, ul)
+import Html exposing (Html, a, br, div, h1, h2, h3, h5, i, li, main_, p, section, text, ul)
 import Html.Attributes as Attr
 import Page
 import Request exposing (Request)
@@ -92,7 +92,7 @@ viewSection1 =
                         [ text "Building or restoring a private blog network? Wayback Download lets you recover the full HTML content of expired domains from archived snapshots at scale — restoring them as clean, host-ready websites." ]
                     , p []
                         [ text "Our bulk subscription plans are built specifically for SEO professionals and link builders who need to restore many sites per month. With up to 100 restores per month in our Premium plan, you can rebuild your PBN assets quickly and cost-effectively." ]
-                    , h3 []
+                    , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "Why SEO Professionals Choose Wayback Download" ]
                     , ul []
                         [ li [] [ text "Flat per-site fee from $29 — or bulk subscription for volume" ]
@@ -115,7 +115,7 @@ viewSection1 =
                     [ div
                         [ Attr.class "second-pricing-table style-2 active"
                         ]
-                        [ h3
+                        [ h5
                             [ Attr.class "second-pricing-table-title"
                             ]
                             [ text "Bulk Subscription", br [] [], text "from $39/mo" ]
@@ -161,10 +161,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-globe fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "One-Time Restore" ]
                         , p []
                             [ text "Restoring a single expired domain? Pay just $29 for the first domain and $19 for each additional domain added to the same order." ]
@@ -179,10 +178,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-layer-group fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Basic Plan — $39/mo" ]
                         , p []
                             [ text "Up to 12 HTML restores per month. Perfect for smaller PBNs and consistent domain acquisition workflows." ]
@@ -197,10 +195,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-rocket fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "Premium Plan — $95/mo" ]
                         , p []
                             [ text "Up to 100 HTML restores per month. Built for active link builders and agencies managing large-scale PBN operations." ]

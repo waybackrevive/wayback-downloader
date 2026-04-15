@@ -2,7 +2,7 @@ module Pages.ExpiredDomainRecovery exposing (Model, Msg, page)
 
 import Common.Header exposing (viewHeader)
 import Common.Footer exposing (viewFooter)
-import Html exposing (Html, a, br, div, h1, h2, h3, i, li, main_, p, section, text, ul)
+import Html exposing (Html, a, br, div, h1, h2, h3, h5, i, li, main_, p, section, text, ul)
 import Html.Attributes as Attr
 import Page
 import Request exposing (Request)
@@ -92,7 +92,7 @@ viewSection1 =
                         [ text "When a domain expires and the website goes offline, its content is often still preserved in the Internet Archive's Wayback Machine. Wayback Download lets you recover that content as a clean, host-ready website — ready to re-launch on the original domain or a new one." ]
                     , p []
                         [ text "Whether your domain lapsed by accident, you're rebuilding an old project, or you've re-registered an expired domain and want its original content back — we restore the full archived version: all pages, stylesheets, images, and JavaScript." ]
-                    , h3 []
+                    , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "Common Expired Domain Recovery Use Cases" ]
                     , ul []
                         [ li [] [ text "Re-registered your old expired domain and want the site back" ]
@@ -113,7 +113,7 @@ viewSection1 =
                     [ div
                         [ Attr.class "second-pricing-table"
                         ]
-                        [ h3
+                        [ h5
                             [ Attr.class "second-pricing-table-title"
                             ]
                             [ text "Domain Recovery", br [] [], text "from $29" ]
@@ -159,10 +159,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-search fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "1. Find the Archived Snapshot" ]
                         , p []
                             [ text "Enter your expired domain on the homepage. We check the Wayback Machine for all snapshots taken before the domain went offline. You pick the date." ]
@@ -176,10 +175,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-cogs fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "2. We Restore the Files" ]
                         , p []
                             [ text "Our system downloads all pages, assets and fonts from the archive, rewrites all internal links, and strips the archive.org wrapper, clean and ready." ]
@@ -193,10 +191,9 @@ viewSection2 =
                         ]
                         [ i
                             [ Attr.class "fas fa-upload fa-2x mb-3"
-                            , Attr.style "color" "#6c3fe0"
                             ]
                             []
-                        , h3 []
+                        , h5 []
                             [ text "3. Upload & Go Live Again" ]
                         , p []
                             [ text "Point your domain DNS to any host and upload the zip file. Your expired domain website is back online — no developer needed." ]
