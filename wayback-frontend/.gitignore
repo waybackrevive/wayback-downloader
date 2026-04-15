@@ -1,3 +1,4 @@
 node_modules/
 .elm-spa/
 elm-stuff/
+public/dist/
