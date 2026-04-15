@@ -148,7 +148,7 @@ subscriptions _ =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Signup | Wayback Download"
+    { title = "Create Free Account — Start Restoring Websites | Wayback Download"
     , body = [ viewHeader shared.storage.user "main" "" (viewMain model) (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1
              , viewFooter shared.year

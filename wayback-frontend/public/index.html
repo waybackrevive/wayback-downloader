@@ -142,6 +142,54 @@
     ]
   }
   </script>
+
+  <!-- HowTo Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Restore a Website from the Wayback Machine",
+    "description": "Restore any deleted or lost website from the Internet Archive's Wayback Machine in 3 simple steps using Wayback Download.",
+    "totalTime": "PT24H",
+    "estimatedCost": {
+      "@type": "MonetaryAmount",
+      "currency": "USD",
+      "value": "29"
+    },
+    "supply": [
+      {
+        "@type": "HowToSupply",
+        "name": "Archived website snapshot URL from web.archive.org"
+      }
+    ],
+    "tool": [
+      {
+        "@type": "HowToTool",
+        "name": "Wayback Download restoration service (wayback.download)"
+      }
+    ],
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": "1",
+        "name": "Enter Your Domain",
+        "text": "Go to wayback.download and type the domain you want to recover in the search box — e.g. example.com. Click the restore button to look up archived snapshots."
+      },
+      {
+        "@type": "HowToStep",
+        "position": "2",
+        "name": "Pick a Wayback Machine Snapshot",
+        "text": "Visit web.archive.org and browse to the best-looking archived version of your site. Copy the full snapshot URL from the browser address bar."
+      },
+      {
+        "@type": "HowToStep",
+        "position": "3",
+        "name": "Checkout and Receive Your Files",
+        "text": "Paste the snapshot URL into the order form, complete checkout for $29, and receive a clean zip file by email — all URLs rewritten and archive headers stripped — ready to upload to any host."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <script src="/dist/elm.js"></script>

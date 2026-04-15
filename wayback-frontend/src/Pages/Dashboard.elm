@@ -243,7 +243,7 @@ update storage msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Dashboard | Wayback Download"
+    { title = "My Restore History | Wayback Download"
     , body = [ viewHeader shared.storage.user "sub" "" viewMain (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1 model
              , viewSection2 model

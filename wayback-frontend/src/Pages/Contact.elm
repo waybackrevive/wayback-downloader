@@ -136,7 +136,7 @@ subscriptions _ =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Contact | Wayback Download"
+    { title = "Contact Wayback Download — Website Recovery Support"
     , body = [ viewHeader shared.storage.user "sub" "" (viewMain model) (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1
              , div [ Attr.class "contact-spacing"

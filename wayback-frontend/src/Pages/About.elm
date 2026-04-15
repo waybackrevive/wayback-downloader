@@ -47,7 +47,7 @@ update msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "About | Wayback Download"
+    { title = "About Wayback Download — Professional Website Recovery Service"
     , body = [ viewHeader shared.storage.user "sub" "" viewMain (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1
              , viewSection2
@@ -63,7 +63,7 @@ viewMain =
         [ h1
             [ Attr.class "mt-3 main-header-text-title"
             ]
-            [ text "About Us" ]
+            [ text "About Wayback Download" ]
         ]
 
 viewSection1: Html Msg
@@ -102,7 +102,7 @@ viewSection1 =
                         , p
                             [ Attr.class "side-text-right-text f-size16"
                             ]
-                            [ text "We are a Montreal-based tech startup focused on making it as easy and fast as possible to recover a lost or deleted website. That's why we developped this self-serve tool. The Internet Archive's Wayback Machine is an amazing product, but restoring websites from there can be a tedious and lengthy process. We wish to eliminate that hassle!", br []
+                            [ text "We are a tech startup focused on making it as easy and fast as possible to recover a lost or deleted website. Since launching, we have helped recover thousands of websites from the Wayback Machine for business owners, developers, and SEO professionals worldwide. The Internet Archive's Wayback Machine is an amazing product, but restoring websites from there can be a tedious and lengthy process — we built Wayback Download to eliminate that hassle.", br []
                                 []
                             ]
                         , div
@@ -122,10 +122,10 @@ viewSection2 =
             [ div
                 [ Attr.class "container"
                 ]
-                [ h5
+                [ h2
                     [ Attr.class "title-default-coodiv-two"
                     ]
-                    [ text "how it works" ]
+                    [ text "How We Restore Websites from the Wayback Machine" ]
                 , div
                     [ Attr.class "row justify-content-center mr-tp-70 how-it-work-section-row"
                     ]

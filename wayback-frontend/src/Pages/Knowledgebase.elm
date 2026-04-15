@@ -47,7 +47,7 @@ update msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Knowledge Base | Wayback Download"
+    { title = "Help Center — Website Restoration Guide & FAQs | Wayback Download"
     , body = [ viewHeader shared.storage.user "other" "" (Html.text "") (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1
              , viewFooter shared.year

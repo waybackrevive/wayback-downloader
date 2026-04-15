@@ -18,7 +18,7 @@ import Page exposing (Page)
 import Proto.Response as Proto
 import Parser
 import Request exposing (Request)
-import Html exposing (Attribute, Html, a, b, br, button, div, h1, h3, h4, h5, i, input, label, li, main_, p, section, small, span, text, ul)
+import Html exposing (Attribute, Html, a, b, br, button, div, h1, h2, h3, h4, h5, i, input, label, li, main_, p, section, small, span, strong, text, ul)
 import Html.Attributes as Attr
 import Shared
 import Storage exposing (Storage)
@@ -147,8 +147,11 @@ view : Shared.Model -> Model -> View Msg
 view shared model =
     { title = "Restore Any Website from the Wayback Machine — From $29 | Wayback Download"
     , body = [ viewHeader shared.storage.user "main" model.domain (viewMain model) (viewModal model) ClickedToggleMenu model.showMenu
+             , viewTrustBar
              , viewSection1
+             , viewSectionHowItWorks
              , viewSection2 shared.env
+             , viewSectionWhoIsItFor
              , viewSection3
              , viewFooter shared.year
              ]
@@ -336,7 +339,11 @@ viewSection1 =
         [ div
             [ Attr.class "container"
             ]
-            [ div
+            [ h2
+                [ Attr.class "title-default-coodiv-two"
+                ]
+                [ text "Everything Included — One Flat Fee" ]
+            , div
                 [ Attr.class "row justify-content-start futures-version-2"
                 ]
                 [ div
@@ -399,10 +406,10 @@ viewSection2 env =
         [ div
             [ Attr.class "container"
             ]
-            [ h5
+            [ h2
                 [ Attr.class "title-default-coodiv-two"
                 ]
-                [ text "Simple, transparent pricing.", span
+                [ text "Simple, Transparent Pricing", span
                     [ Attr.class "mr-tp-20"
                     ]
                     [ text "Flat fee per domain. No hidden charges." ]
@@ -559,7 +566,7 @@ viewSection3 =
         [ div
             [ Attr.class "container"
             ]
-            [ h5
+            [ h2
                 [ Attr.class "title-default-coodiv-two"
                 ]
                 [ text "Frequently Asked Questions" ]
@@ -919,6 +926,231 @@ viewSection3 =
                                 ]
                                 [ text "When you place your order you choose the specific Wayback Machine snapshot URL. You can pick any archived snapshot date that exists — just navigate to ", a [ Attr.href "https://web.archive.org", Attr.target "_blank" ] [ text "web.archive.org" ], text ", find the snapshot closest to when your site looked best, and use that URL when ordering." ]
                             ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+viewTrustBar: Html msg
+viewTrustBar =
+    div
+        [ Attr.class "container"
+        , Attr.style "padding" "20px 0 0 0"
+        , Attr.style "border-bottom" "1px solid #ebebeb"
+        ]
+        [ div
+            [ Attr.class "row justify-content-center text-center"
+            ]
+            [ div
+                [ Attr.class "col-md-3 col-6"
+                , Attr.style "padding" "12px"
+                ]
+                [ i
+                    [ Attr.class "fas fa-check-circle"
+                    , Attr.style "color" "#6c3fe0"
+                    , Attr.style "font-size" "1.3rem"
+                    ]
+                    []
+                , p
+                    [ Attr.style "margin" "4px 0 0 0"
+                    , Attr.style "font-size" "0.82rem"
+                    , Attr.style "font-weight" "600"
+                    ]
+                    [ text "10,000+ Sites Restored" ]
+                ]
+            , div
+                [ Attr.class "col-md-3 col-6"
+                , Attr.style "padding" "12px"
+                ]
+                [ i
+                    [ Attr.class "fas fa-clock"
+                    , Attr.style "color" "#6c3fe0"
+                    , Attr.style "font-size" "1.3rem"
+                    ]
+                    []
+                , p
+                    [ Attr.style "margin" "4px 0 0 0"
+                    , Attr.style "font-size" "0.82rem"
+                    , Attr.style "font-weight" "600"
+                    ]
+                    [ text "Results Within 24 Hours" ]
+                ]
+            , div
+                [ Attr.class "col-md-3 col-6"
+                , Attr.style "padding" "12px"
+                ]
+                [ i
+                    [ Attr.class "fas fa-lock"
+                    , Attr.style "color" "#6c3fe0"
+                    , Attr.style "font-size" "1.3rem"
+                    ]
+                    []
+                , p
+                    [ Attr.style "margin" "4px 0 0 0"
+                    , Attr.style "font-size" "0.82rem"
+                    , Attr.style "font-weight" "600"
+                    ]
+                    [ text "Secure Checkout" ]
+                ]
+            , div
+                [ Attr.class "col-md-3 col-6"
+                , Attr.style "padding" "12px"
+                ]
+                [ i
+                    [ Attr.class "fas fa-database"
+                    , Attr.style "color" "#6c3fe0"
+                    , Attr.style "font-size" "1.3rem"
+                    ]
+                    []
+                , p
+                    [ Attr.style "margin" "4px 0 0 0"
+                    , Attr.style "font-size" "0.82rem"
+                    , Attr.style "font-weight" "600"
+                    ]
+                    [ text "Powered by archive.org" ]
+                ]
+            ]
+        ]
+
+
+viewSectionHowItWorks: Html msg
+viewSectionHowItWorks =
+    section
+        [ Attr.class "padding-100-0 position-relative how-it-work-section"
+        ]
+        [ div
+            [ Attr.class "container"
+            ]
+            [ h2
+                [ Attr.class "title-default-coodiv-two"
+                ]
+                [ text "Restore Any Website in 3 Simple Steps" ]
+            , div
+                [ Attr.class "row justify-content-center mr-tp-70 how-it-work-section-row"
+                ]
+                [ div
+                    [ Attr.class "col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "how-it-works-box"
+                        ]
+                        [ i
+                            [ Attr.class "h-flaticon-011-globe-2"
+                            ]
+                            []
+                        , h3 []
+                            [ text "1. Enter Your Domain" ]
+                        , p []
+                            [ text "Type the domain you want to recover in the search box above — e.g. example.com. We find every archived snapshot available in the Wayback Machine." ]
+                        ]
+                    ]
+                , div
+                    [ Attr.class "col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "how-it-works-box"
+                        ]
+                        [ i
+                            [ Attr.class "h-flaticon-014-calendar"
+                            ]
+                            []
+                        , h3 []
+                            [ text "2. Pick a Snapshot" ]
+                        , p []
+                            [ text "Browse ", a [ Attr.href "https://web.archive.org/", Attr.target "_blank" ] [ text "web.archive.org" ], text " and choose the best archived version of your site. Any year, any date — you decide." ]
+                        ]
+                    ]
+                , div
+                    [ Attr.class "col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "how-it-works-box"
+                        ]
+                        [ i
+                            [ Attr.class "h-flaticon-008-upload"
+                            ]
+                            []
+                        , h3 []
+                            [ text "3. Receive & Go Live" ]
+                        , p []
+                            [ text "Paste the snapshot URL, pay $29 flat, and receive a clean zip by email — all URLs rewritten, archive headers stripped, ready to upload to any host." ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+viewSectionWhoIsItFor: Html msg
+viewSectionWhoIsItFor =
+    section
+        [ Attr.class "padding-100-0 position-relative with-top-border"
+        ]
+        [ div
+            [ Attr.class "container"
+            ]
+            [ h2
+                [ Attr.class "title-default-coodiv-two"
+                ]
+                [ text "Who Uses Wayback Download?" ]
+            , div
+                [ Attr.class "row justify-content-start futures-version-2"
+                ]
+                [ div
+                    [ Attr.class "flex-futures col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "futures-version-2-box"
+                        ]
+                        [ i
+                            [ Attr.class "fas fa-user-tie fa-2x mb-3"
+                            , Attr.style "color" "#6c3fe0"
+                            ]
+                            []
+                        , h3 []
+                            [ text "Business Owners" ]
+                        , p []
+                            [ text "Your website was deleted, hacked, or your developer disappeared. We restore it from archive.org so your business is back online fast — no technical skills needed." ]
+                        ]
+                    ]
+                , div
+                    [ Attr.class "flex-futures col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "futures-version-2-box"
+                        ]
+                        [ i
+                            [ Attr.class "fas fa-chart-line fa-2x mb-3"
+                            , Attr.style "color" "#6c3fe0"
+                            ]
+                            []
+                        , h3 []
+                            [ text "SEO & PBN Managers" ]
+                        , p []
+                            [ text "Restore expired domains at scale. Our bulk subscription covers up to 100 HTML restores per month — ideal for rebuilding PBN assets and link networks." ]
+                        , a
+                            [ Attr.href "/subscription"
+                            ]
+                            [ text "See bulk subscription plans →" ]
+                        ]
+                    ]
+                , div
+                    [ Attr.class "flex-futures col-md-4"
+                    ]
+                    [ div
+                        [ Attr.class "futures-version-2-box"
+                        ]
+                        [ i
+                            [ Attr.class "fas fa-code fa-2x mb-3"
+                            , Attr.style "color" "#6c3fe0"
+                            ]
+                            []
+                        , h3 []
+                            [ text "Web Developers & Agencies" ]
+                        , p []
+                            [ text "Recover client sites quickly and hand off clean, host-ready files. ZIP delivered by email with all internal links rewritten and archive.org wrapper stripped." ]
                         ]
                     ]
                 ]

@@ -218,7 +218,7 @@ update shared user msg model =
 
 view : Shared.Model -> User -> Model -> View Msg
 view shared user model =
-    { title = "Place Your Order | Wayback Download"
+    { title = "Order Website Restoration from Archive.org | Wayback Download"
     , body = [ viewHeader shared.storage.user "sub" "" viewMain (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1 shared.env model shared.storage user
              , viewFooter shared.year
