@@ -28,6 +28,15 @@
     content="Lost your website? Professional restoration from the Wayback Machine starting at $29. HTML, CSS, images all fixed." />
   <meta name="twitter:image" content="https://wayback.download/img/og-preview.png" />
 
+  <!-- Early connections to external font CDN -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://hcaptcha.com">
+
+  <!-- Preload the two most-used font weights (Poppins Regular + Quicksand Regular) -->
+  <!-- These are loaded by main.min.css @font-face; preloading them avoids CLS from late font swap -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v6/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/quicksand/v9/6xKtdSZaM9iE8KbpRA_hK1QN.woff2" as="font" type="font/woff2" crossorigin>
+
   <link href="/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/css/main.min.css" rel="stylesheet" />
   <link href="/img/favicon.png" rel="icon" />
@@ -99,6 +108,16 @@
       position: relative;
       z-index: 1;
     }
+
+    /* CLS stabilizers: reserve space before Elm renders to prevent layout shifts */
+    html, body { margin: 0; padding: 0; }
+    /* Stabilize the navbar height so content below it doesn't shift */
+    #coodiv-navbar-header { min-height: 70px; contain: layout; }
+    /* Prevent CLS from scroll-to-top button appearing (position:fixed so no layout impact) */
+    .go-top { position: fixed !important; }
+    /* Ensure images with explicit width/height don't cause aspect-ratio shifts */
+    img { height: auto; }
+    img[width][height] { aspect-ratio: attr(width) / attr(height); }
   </style>
 
   <!-- Service Schema -->
@@ -266,12 +285,13 @@
 </head>
 
 <body>
-  <script src="/dist/elm.js"></script>
-  <script src="/js/main.js"></script>
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/template-scripts.js"></script>
-  <script src="https://hcaptcha.com/1/api.js?render=explicit"></script>
+  <!-- defer preserves execution order and prevents parser-blocking -->
+  <script src="/dist/elm.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/jquery.min.js" defer></script>
+  <script src="/js/bootstrap.min.js" defer></script>
+  <script src="/js/template-scripts.js" defer></script>
+  <script src="https://hcaptcha.com/1/api.js?render=explicit" defer></script>
 </body>
 
 </html>

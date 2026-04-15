@@ -20,10 +20,10 @@ viewNavbar user clickedToggleMenu showMenu =
         ]
         [ div [ class "container main-header-coodiv-s" ]
             [ a [ class "navbar-brand", href "/" ]
-                [ img [ alt "Wayback Machine Downloader", class "w-logo", src "/img/header/logo-w.png" ]
+                [ img [ alt "Wayback Machine Downloader", class "w-logo", src "/img/header/logo-w.png", attribute "width" "107", attribute "height" "25" ]
                     []
                 , text "				"
-                , img [ alt "Wayback Machine Downloader", class "b-logo", src "/img/header/logo.svg" ]
+                , img [ alt "Wayback Machine Downloader", class "b-logo", src "/img/header/logo.svg", attribute "width" "107", attribute "height" "25" ]
                     []
                 , text "				"
                 ]
