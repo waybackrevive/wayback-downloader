@@ -94,7 +94,7 @@ viewSection1 =
                         [ text "Wayback Download transforms those archived snapshots into a fully functional website — all HTML, CSS, JavaScript, images and fonts restored, every URL rewritten, and archive.org headers stripped clean. You receive a zip file ready to upload to any hosting platform." ]
                     , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "What's Included in Every Website Recovery" ]
-                    , ul []
+                    , ul [ Attr.class "second-pricing-table-body mr-tp-20" ]
                         [ li [] [ text "All HTML pages recovered with original content intact" ]
                         , li [] [ text "CSS stylesheets, JavaScript, images and fonts included" ]
                         , li [] [ text "Internal links automatically rewritten to your domain" ]

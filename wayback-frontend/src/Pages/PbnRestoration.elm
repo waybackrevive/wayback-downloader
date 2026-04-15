@@ -94,7 +94,7 @@ viewSection1 =
                         [ text "Our bulk subscription plans are built specifically for SEO professionals and link builders who need to restore many sites per month. With up to 100 restores per month in our Premium plan, you can rebuild your PBN assets quickly and cost-effectively." ]
                     , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "Why SEO Professionals Choose Wayback Download" ]
-                    , ul []
+                    , ul [ Attr.class "second-pricing-table-body mr-tp-20" ]
                         [ li [] [ text "Flat per-site fee from $29 — or bulk subscription for volume" ]
                         , li [] [ text "Full HTML content — all pages, posts, images and CSS" ]
                         , li [] [ text "archive.org headers and footers fully stripped from every page" ]

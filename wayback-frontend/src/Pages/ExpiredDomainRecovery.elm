@@ -94,7 +94,7 @@ viewSection1 =
                         [ text "Whether your domain lapsed by accident, you're rebuilding an old project, or you've re-registered an expired domain and want its original content back — we restore the full archived version: all pages, stylesheets, images, and JavaScript." ]
                     , h3 [ Attr.class "side-text-right-title f-size20 mr-tp-30" ]
                         [ text "Common Expired Domain Recovery Use Cases" ]
-                    , ul []
+                    , ul [ Attr.class "second-pricing-table-body mr-tp-20" ]
                         [ li [] [ text "Re-registered your old expired domain and want the site back" ]
                         , li [] [ text "Acquired an expired domain that had valuable content" ]
                         , li [] [ text "Business domain expired during a lapse — need site restored fast" ]

@@ -335,7 +335,9 @@ viewModal model =
 
 viewSection1: Html msg
 viewSection1 =
-    section []
+    section
+        [ Attr.class "padding-100-0 position-relative"
+        ]
         [ div
             [ Attr.class "container"
             ]
