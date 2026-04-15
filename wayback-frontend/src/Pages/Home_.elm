@@ -346,7 +346,7 @@ viewSection1 =
                 ]
                 [ text "Everything Included — One Flat Fee" ]
             , div
-                [ Attr.class "row justify-content-start futures-version-2"
+                [ Attr.class "row justify-content-start futures-version-2 mr-tp-30"
                 ]
                 [ div
                     [ Attr.class "flex-futures col-md-4"
@@ -1116,7 +1116,7 @@ viewSectionWhoIsItFor =
                 ]
                 [ text "Who Uses Wayback Download?" ]
             , div
-                [ Attr.class "row justify-content-start futures-version-2"
+                [ Attr.class "row justify-content-start futures-version-2 mr-tp-30"
                 ]
                 [ div
                     [ Attr.class "flex-futures col-md-4"

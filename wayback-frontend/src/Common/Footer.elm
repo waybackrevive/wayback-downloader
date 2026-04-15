@@ -61,6 +61,8 @@ viewFooter year =
                         [ text "Services" ]
                     , ul
                         [ Attr.class "under-footer-ullist"
+                        , Attr.style "width" "100%"
+                        , Attr.style "float" "none"
                         ]
                         [ li []
                             [ a [ Attr.href "/website-recovery" ] [ text "Website Recovery" ] ]
@@ -86,6 +88,8 @@ viewFooter year =
                         [ text "Company" ]
                     , ul
                         [ Attr.class "under-footer-ullist"
+                        , Attr.style "width" "100%"
+                        , Attr.style "float" "none"
                         ]
                         [ li []
                             [ a [ Attr.href "/about" ] [ text "About Us" ] ]
@@ -111,6 +115,8 @@ viewFooter year =
                         [ text "Account" ]
                     , ul
                         [ Attr.class "under-footer-ullist"
+                        , Attr.style "width" "100%"
+                        , Attr.style "float" "none"
                         ]
                         [ li []
                             [ a [ Attr.href "/login" ] [ text "Log In" ] ]
