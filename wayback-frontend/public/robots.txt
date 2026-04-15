@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block private/app routes
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /order/
+Disallow: /success/
+
+Sitemap: https://wayback.download/sitemap.xml

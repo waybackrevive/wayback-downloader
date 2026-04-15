@@ -145,7 +145,7 @@ update shared msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Recover Any Website from archive.org — Starting at $29 | Wayback Download"
+    { title = "Restore Any Website from the Wayback Machine — From $29 | Wayback Download"
     , body = [ viewHeader shared.storage.user "main" model.domain (viewMain model) (viewModal model) ClickedToggleMenu model.showMenu
              , viewSection1
              , viewSection2 shared.env
@@ -168,7 +168,7 @@ viewMain model =
                 [ h1
                     [ Attr.class "mt-3 main-header-text-title"
                     ]
-                    [ text "Recover Your Lost Website from archive.org" ]
+                    [ text "Restore Any Lost Website from the Wayback Machine" ]
                 , div
                     [ Attr.class "row justify-content-center domain-search-row"
                     ]
@@ -846,6 +846,78 @@ viewSection3 =
                                     ]
                                     [ text "Internet Archive" ]
                                 , text " and select an amount you would like to donate. We rely on the Internet Archive's data to provide this service, so we encourage everyone using our service to support them!" ]
+                            ]
+                        , div
+                            [ Attr.class "questions-box"
+                            ]
+                            [ div
+                                [ Attr.id "headingtwelve"
+                                ]
+                                [ button
+                                    [ Attr.attribute "aria-controls" "questiontwelve"
+                                    , Attr.attribute "aria-expanded" "true"
+                                    , Attr.class "btn questions-title collapsed"
+                                    , Attr.attribute "data-target" "#questiontwelve"
+                                    , Attr.attribute "data-toggle" "collapse"
+                                    , Attr.type_ "button"
+                                    ]
+                                    [ text "How much does website restoration cost?" ]
+                                ]
+                            , div
+                                [ Attr.attribute "aria-labelledby" "headingtwelve"
+                                , Attr.class "collapse questions-reponse"
+                                , Attr.attribute "data-parent" "#frequently-questions"
+                                , Attr.id "questiontwelve"
+                                ]
+                                [ text "A single-domain HTML restore starts at $29. Each additional domain added to the same order is $19. If you restore sites regularly, our Basic subscription plan ($39/month) covers up to 12 restores and our Premium plan ($95/month) covers up to 100 restores per month." ]
+                            ]
+                        , div
+                            [ Attr.class "questions-box"
+                            ]
+                            [ div
+                                [ Attr.id "headingthirteen"
+                                ]
+                                [ button
+                                    [ Attr.attribute "aria-controls" "questionthirteen"
+                                    , Attr.attribute "aria-expanded" "true"
+                                    , Attr.class "btn questions-title collapsed"
+                                    , Attr.attribute "data-target" "#questionthirteen"
+                                    , Attr.attribute "data-toggle" "collapse"
+                                    , Attr.type_ "button"
+                                    ]
+                                    [ text "Is it legal to restore a website from the Wayback Machine?" ]
+                                ]
+                            , div
+                                [ Attr.attribute "aria-labelledby" "headingthirteen"
+                                , Attr.class "collapse questions-reponse"
+                                , Attr.attribute "data-parent" "#frequently-questions"
+                                , Attr.id "questionthirteen"
+                                ]
+                                [ text "Yes. Restoring your own website, or a website you have permission to recover, is legal. The Internet Archive makes publicly crawled content accessible to everyone. You should only restore websites you own or have authorisation to recover." ]
+                            ]
+                        , div
+                            [ Attr.class "questions-box"
+                            ]
+                            [ div
+                                [ Attr.id "headingfourteen"
+                                ]
+                                [ button
+                                    [ Attr.attribute "aria-controls" "questionfourteen"
+                                    , Attr.attribute "aria-expanded" "true"
+                                    , Attr.class "btn questions-title collapsed"
+                                    , Attr.attribute "data-target" "#questionfourteen"
+                                    , Attr.attribute "data-toggle" "collapse"
+                                    , Attr.type_ "button"
+                                    ]
+                                    [ text "What if only an old version of my site is archived?" ]
+                                ]
+                            , div
+                                [ Attr.attribute "aria-labelledby" "headingfourteen"
+                                , Attr.class "collapse questions-reponse"
+                                , Attr.attribute "data-parent" "#frequently-questions"
+                                , Attr.id "questionfourteen"
+                                ]
+                                [ text "When you place your order you choose the specific Wayback Machine snapshot URL. You can pick any archived snapshot date that exists — just navigate to ", a [ Attr.href "https://web.archive.org", Attr.target "_blank" ] [ text "web.archive.org" ], text ", find the snapshot closest to when your site looked best, and use that URL when ordering." ]
                             ]
                         ]
                     ]
