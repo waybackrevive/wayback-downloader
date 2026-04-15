@@ -935,81 +935,98 @@ viewSection3 =
 
 viewTrustBar: Html msg
 viewTrustBar =
-    div
-        [ Attr.class "container"
-        , Attr.style "padding" "20px 0 0 0"
-        , Attr.style "border-bottom" "1px solid #ebebeb"
+    section
+        [ Attr.style "background" "#f8f9ff"
+        , Attr.style "border-top" "1px solid #e8e8f0"
+        , Attr.style "border-bottom" "1px solid #e8e8f0"
+        , Attr.style "padding" "18px 0"
         ]
         [ div
-            [ Attr.class "row justify-content-center text-center"
+            [ Attr.class "container"
             ]
             [ div
-                [ Attr.class "col-md-3 col-6"
-                , Attr.style "padding" "12px"
+                [ Attr.class "row justify-content-center text-center"
                 ]
-                [ i
-                    [ Attr.class "fas fa-check-circle"
-                    , Attr.style "color" "#6c3fe0"
-                    , Attr.style "font-size" "1.3rem"
+                [ div
+                    [ Attr.class "col-md-3 col-6"
+                    , Attr.style "padding" "8px 16px"
                     ]
-                    []
-                , p
-                    [ Attr.style "margin" "4px 0 0 0"
-                    , Attr.style "font-size" "0.82rem"
-                    , Attr.style "font-weight" "600"
+                    [ i
+                        [ Attr.class "fas fa-check-circle"
+                        , Attr.style "color" "#6c3fe0"
+                        , Attr.style "font-size" "1.5rem"
+                        , Attr.style "display" "block"
+                        , Attr.style "margin-bottom" "6px"
+                        ]
+                        []
+                    , p
+                        [ Attr.style "margin" "0"
+                        , Attr.style "font-size" "0.85rem"
+                        , Attr.style "font-weight" "700"
+                        , Attr.style "color" "#2d2d4e"
+                        ]
+                        [ text "10,000+ Sites Restored" ]
                     ]
-                    [ text "10,000+ Sites Restored" ]
-                ]
-            , div
-                [ Attr.class "col-md-3 col-6"
-                , Attr.style "padding" "12px"
-                ]
-                [ i
-                    [ Attr.class "fas fa-clock"
-                    , Attr.style "color" "#6c3fe0"
-                    , Attr.style "font-size" "1.3rem"
+                , div
+                    [ Attr.class "col-md-3 col-6"
+                    , Attr.style "padding" "8px 16px"
                     ]
-                    []
-                , p
-                    [ Attr.style "margin" "4px 0 0 0"
-                    , Attr.style "font-size" "0.82rem"
-                    , Attr.style "font-weight" "600"
+                    [ i
+                        [ Attr.class "fas fa-clock"
+                        , Attr.style "color" "#6c3fe0"
+                        , Attr.style "font-size" "1.5rem"
+                        , Attr.style "display" "block"
+                        , Attr.style "margin-bottom" "6px"
+                        ]
+                        []
+                    , p
+                        [ Attr.style "margin" "0"
+                        , Attr.style "font-size" "0.85rem"
+                        , Attr.style "font-weight" "700"
+                        , Attr.style "color" "#2d2d4e"
+                        ]
+                        [ text "Results Within 24 Hours" ]
                     ]
-                    [ text "Results Within 24 Hours" ]
-                ]
-            , div
-                [ Attr.class "col-md-3 col-6"
-                , Attr.style "padding" "12px"
-                ]
-                [ i
-                    [ Attr.class "fas fa-lock"
-                    , Attr.style "color" "#6c3fe0"
-                    , Attr.style "font-size" "1.3rem"
+                , div
+                    [ Attr.class "col-md-3 col-6"
+                    , Attr.style "padding" "8px 16px"
                     ]
-                    []
-                , p
-                    [ Attr.style "margin" "4px 0 0 0"
-                    , Attr.style "font-size" "0.82rem"
-                    , Attr.style "font-weight" "600"
+                    [ i
+                        [ Attr.class "fas fa-lock"
+                        , Attr.style "color" "#6c3fe0"
+                        , Attr.style "font-size" "1.5rem"
+                        , Attr.style "display" "block"
+                        , Attr.style "margin-bottom" "6px"
+                        ]
+                        []
+                    , p
+                        [ Attr.style "margin" "0"
+                        , Attr.style "font-size" "0.85rem"
+                        , Attr.style "font-weight" "700"
+                        , Attr.style "color" "#2d2d4e"
+                        ]
+                        [ text "Secure Checkout" ]
                     ]
-                    [ text "Secure Checkout" ]
-                ]
-            , div
-                [ Attr.class "col-md-3 col-6"
-                , Attr.style "padding" "12px"
-                ]
-                [ i
-                    [ Attr.class "fas fa-database"
-                    , Attr.style "color" "#6c3fe0"
-                    , Attr.style "font-size" "1.3rem"
+                , div
+                    [ Attr.class "col-md-3 col-6"
+                    , Attr.style "padding" "8px 16px"
                     ]
-                    []
-                , p
-                    [ Attr.style "margin" "4px 0 0 0"
-                    , Attr.style "font-size" "0.82rem"
-                    , Attr.style "font-weight" "600"
+                    [ i
+                        [ Attr.class "fas fa-database"
+                        , Attr.style "color" "#6c3fe0"
+                        , Attr.style "font-size" "1.5rem"
+                        , Attr.style "display" "block"
+                        , Attr.style "margin-bottom" "6px"
+                        ]
+                        []
+                    , p
+                        [ Attr.style "margin" "0"
+                        , Attr.style "font-size" "0.85rem"
+                        , Attr.style "font-weight" "700"
+                        , Attr.style "color" "#2d2d4e"
+                        ]
+                        [ text "Powered by archive.org" ]
                     ]
-                    [ text "Powered by archive.org" ]
                 ]
             ]
         ]

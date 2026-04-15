@@ -86,10 +86,9 @@ viewAnnouncementBanner =
         , style "z-index" "9999"
         , style "position" "relative"
         ]
-        [ strong [] [ text "We're back! " ]
-        , text "Wayback Download is back online. Recover any website from archive.org — "
-        , strong [] [ text "starting at $29." ]
-        , text " Thank you for your patience!"
+        [ strong [] [ text "$29 Website Recovery — " ]
+        , text "Restore any lost website from archive.org. All links fixed & ready to upload. "
+        , a [ style "color" "#fff", style "text-decoration" "underline", href "/" ] [ text "Get started →" ]
         ]
 
 navList: List(Html msg)
@@ -98,17 +97,32 @@ navList =
             [ a [ class "nav-link", href (Route.toHref Route.Home_ ) ]
                 [ text "Home" ]
             ]
+        , li [ class "nav-item dropdown" ]
+            [ a [ class "nav-link dropdown-toggle"
+                , href "#"
+                , attribute "data-toggle" "dropdown"
+                , attribute "role" "button"
+                , attribute "aria-haspopup" "true"
+                , attribute "aria-expanded" "false"
+                ]
+                [ text "Services" ]
+            , div [ class "dropdown-menu" ]
+                [ a [ class "dropdown-item", href "/website-recovery" ] [ text "Website Recovery" ]
+                , a [ class "dropdown-item", href "/expired-domain-recovery" ] [ text "Expired Domain Recovery" ]
+                , a [ class "dropdown-item", href "/pbn-restoration" ] [ text "PBN Restoration" ]
+                ]
+            ]
         , li [ class "nav-item" ]
-            [ a [ class "nav-link", href (Route.toHref Route.About ) ]
-                [ text "About Us" ]
+            [ a [ class "nav-link", href (Route.toHref Route.Subscription ) ]
+                [ text "Pricing" ]
             ]
         , li [ class "nav-item" ]
             [ a [ class "nav-link", href (Route.toHref Route.Knowledgebase ) ]
-                [ text "Knowledge Base" ]
+                [ text "Help" ]
             ]
         , li [ class "nav-item" ]
             [ a [ class "nav-link", href (Route.toHref Route.Contact ) ]
-                [ text "Contact us" ]
+                [ text "Contact" ]
             ]
     ]
 
