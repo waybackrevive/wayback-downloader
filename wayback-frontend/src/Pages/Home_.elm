@@ -186,7 +186,7 @@ viewMain model =
                         , input
                             [ Attr.id "domain"
                             , Attr.name "domain"
-                            , Attr.placeholder "select a domain to restore"
+                            , Attr.placeholder "Enter a domain to restore"
                             , Attr.type_ "text"
                             , Attr.value model.domain
                             , onInput ChangeDomain

@@ -13,7 +13,7 @@ viewFooter year =
             [ Attr.class "container"
             ]
             [ div
-                [ Attr.class "mr-tp-40 row justify-content-between footer-area-under"
+                [ Attr.class "row justify-content-between footer-area-under"
                 ]
                 -- Column 1: Brand + description
                 [ div
