@@ -34,31 +34,16 @@
 
   <!-- Preload the two most-used font weights (Poppins Regular + Quicksand Regular) -->
   <!-- These are loaded by main.min.css @font-face; preloading them avoids CLS from late font swap -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v6/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font"
-    type="font/woff2" crossorigin>
-  <link rel="preload" href="https://fonts.gstatic.com/s/quicksand/v9/6xKtdSZaM9iE8KbpRA_hK1QN.woff2" as="font"
-    type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v6/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/quicksand/v9/6xKtdSZaM9iE8KbpRA_hK1QN.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!--
-    Async CSS loading: preload tells browser to fetch CSS with high priority without blocking,
-    then onload swaps rel to 'stylesheet' to apply. noscript is the no-JS fallback.
-    This eliminates ~1650ms render-blocking penalty on the critical path.
-  -->
-  <link rel="preload" href="/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/main.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/main.min.css">
-  </noscript>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/main.min.css" rel="stylesheet" />
   <link href="/img/favicon.png" rel="icon" />
   <script defer data-domain="wayback.download" src="https://plausible.io/js/plausible.js"></script>
 
   <!-- Services nav dropdown (CSS-only hover, no Bootstrap JS needed) -->
   <style>
-    /* Minimal critical CSS — prevents FOUC before async stylesheets arrive */
-    *, *::before, *::after { box-sizing: border-box }
-    body { margin: 0; background: #fff; }
-
     .services-dropdown {
       position: relative !important;
     }
@@ -125,31 +110,14 @@
     }
 
     /* CLS stabilizers: reserve space before Elm renders to prevent layout shifts */
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
+    html, body { margin: 0; padding: 0; }
     /* Stabilize the navbar height so content below it doesn't shift */
-    #coodiv-navbar-header {
-      min-height: 70px;
-      contain: layout;
-    }
-
+    #coodiv-navbar-header { min-height: 70px; contain: layout; }
     /* Prevent CLS from scroll-to-top button appearing (position:fixed so no layout impact) */
-    .go-top {
-      position: fixed !important;
-    }
-
+    .go-top { position: fixed !important; }
     /* Ensure images with explicit width/height don't cause aspect-ratio shifts */
-    img {
-      height: auto;
-    }
-
-    img[width][height] {
-      aspect-ratio: attr(width) / attr(height);
-    }
+    img { height: auto; }
+    img[width][height] { aspect-ratio: attr(width) / attr(height); }
   </style>
 
   <!-- Service Schema -->
