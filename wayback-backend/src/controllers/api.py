@@ -275,8 +275,8 @@ def checkout_api(body):
             "https://api.whop.com/api/v1/checkout_configurations",
             headers=_whop_headers(),
             json={
-                "company_id": current_app.config.get("WHOP_COMPANY_ID"),
                 "plan": {
+                    "company_id": current_app.config.get("WHOP_COMPANY_ID"),
                     "initial_price": total_price,
                     "plan_type": "one_time"
                 },
