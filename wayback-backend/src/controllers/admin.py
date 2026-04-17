@@ -101,3 +101,37 @@ def abandoned_sessions():
         session_restores = Restore.query.filter_by(sessionId=session.sessionId).all()
         result.append((session, session_restores))
     return ProtobufResponse().success(HTTPStatus.OK, abandonedSessions=result)
+
+
+@cognito_auth_header_required_api
+@admin_required
+def trigger_restore(session_id):
+    """Manually trigger order processing for a session — for testing without payment."""
+    from src.controllers.api import process_order, add_whop_payment  # local import to avoid circular
+    import uuid
+
+    whop_session = WhopSession.query.get(session_id)
+    if whop_session is None:
+        return ProtobufResponse().failure(HTTPStatus.NOT_FOUND, error="Session not found")
+
+    # If session already has a payment, use it
+    if whop_session.paymentId:
+        whop_payment = WhopPayment.query.get(whop_session.paymentId)
+    else:
+        # Create a synthetic test payment so process_order has something to reference
+        fake_payment_id = "test_" + str(uuid.uuid4()).replace("-", "")[:16]
+        fake_email = whop_session.email or "test@wayback.download"
+        add_whop_payment(fake_payment_id, "0.00", "", fake_email)
+        whop_payment = WhopPayment.query.get(fake_payment_id)
+        whop_session.paymentId = fake_payment_id
+        db.session.commit()
+
+    if whop_payment is None:
+        return ProtobufResponse().failure(HTTPStatus.INTERNAL_SERVER_ERROR, error="Could not create payment record")
+
+    try:
+        process_order(whop_session, whop_payment)
+        return ProtobufResponse().success(HTTPStatus.OK)
+    except Exception as exception:
+        log.error("trigger_restore failed for session %s: %s", session_id, exception)
+        return ProtobufResponse().failure(HTTPStatus.INTERNAL_SERVER_ERROR, error=str(exception))

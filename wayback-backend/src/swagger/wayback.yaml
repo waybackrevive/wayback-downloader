@@ -426,3 +426,35 @@ paths:
           headers:
             Content-Type:
               type: string
+
+  /admin/trigger-restore/{session_id}:
+    post:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: trigger_restore
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      parameters:
+        - in: path
+          name: session_id
+          type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string
+        404:
+          description: Not Found
+          headers:
+            Content-Type:
+              type: string
