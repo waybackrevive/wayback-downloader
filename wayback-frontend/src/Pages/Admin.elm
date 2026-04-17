@@ -59,6 +59,8 @@ type Msg
     | ClickedResend Restore
     | ClickedClear
     | ClickedRefresh
+    | ClickedTriggerRestore String
+    | TriggerResp (Result Http.Error Proto.Response)
     | ChangeSearch String
     | ClickedPageNum Int
     | ClickedNextPage
@@ -200,6 +202,32 @@ update env user storage msg model =
                                     ( model, Cmd.none )
                 Err _ ->
                     ( model, Cmd.none )
+
+        ClickedTriggerRestore sessionId ->
+            ( { model | status = Loading }
+            , Http.request
+                { url = env.serverUrl ++ "/admin/trigger-restore/" ++ sessionId
+                , method = "POST"
+                , headers = [ Http.header "Authorization" ("Bearer " ++ user.token) ]
+                , body = Http.emptyBody
+                , expect = CustomHttp.expectProto TriggerResp Proto.decodeResponse
+                , timeout = Nothing
+                , tracker = Nothing
+                }
+            )
+
+        TriggerResp result ->
+            case result of
+                Ok resp ->
+                    case resp.status of
+                        Proto.Status_FAILED ->
+                            ( { model | status = Failure resp.error }, Cmd.none )
+                        _ ->
+                            ( { model | status = Success "Restore job triggered successfully!" }
+                            , getOrders env user storage
+                            )
+                Err _ ->
+                    ( { model | status = Failure "Failed to trigger restore" }, Cmd.none )
 
         ClickedQueue ->
             if model.queue.domain /= "" && model.queue.timestamp /= "" && model.queue.restoreId /= "" && model.queue.email /= "" && model.queue.action /= "" then
@@ -802,6 +830,7 @@ viewSection3 model =
                                         , th [] [ text "Cart Value" ]
                                         , th [] [ text "Emails Sent" ]
                                         , th [] [ text "Checkout Link" ]
+                                        , th [] [ text "Action" ]
                                         ]
                                     ]
                                 , tbody []
@@ -833,5 +862,15 @@ viewAbandonedItem session =
                 , Attr.style "width" "100px"
                 ]
                 [ text "Checkout" ]
+            ]
+        , td []
+            [ button
+                [ Attr.class "plan-dedicated-order-button"
+                , Attr.style "background" "#e67e22"
+                , Attr.style "border" "0px"
+                , Attr.style "width" "120px"
+                , onClick (ClickedTriggerRestore session.sessionId)
+                ]
+                [ text "Trigger Restore" ]
             ]
         ]

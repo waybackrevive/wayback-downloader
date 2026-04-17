@@ -179,8 +179,8 @@ class CognitoUser():
             info="Successfully deleted cognito user")
 
     @staticmethod
-    def confirm_signup(username):
-        """Confirm cognito user"""
+    def admin_confirm_signup(username):
+        """Admin-force confirm cognito user (no code needed)"""
         client = boto3.client("cognito-idp", region_name=current_app.config.get("COGNITO_REGION"))
         try:
             client.admin_confirm_sign_up(
