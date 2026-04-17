@@ -8,8 +8,6 @@ RUN apk update \
 	&& apk add --virtual build-depts gcc python3-dev musl-dev \
 	&& apk add --no-cache mariadb-dev
 
-RUN pip install awscli
-
 COPY . .
 
 RUN pip3 install -r requirements.txt
