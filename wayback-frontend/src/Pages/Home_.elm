@@ -301,27 +301,23 @@ viewModal model =
                             , onInput ChangeWaybackUrl
                             ]
                             []
-                        , span
-                            [ Attr.class "inline-button-domain-order"
-                            ]
+                        ]
+                        , div [ Attr.class "mt-3" ]
                             [ button
-                                [ Attr.attribute "data-placement" "left"
-                                , Attr.attribute "data-toggle" "tooltip"
+                                [ Attr.class "btn btn-primary btn-block"
                                 , Attr.id "transfer-btn-2"
                                 , Attr.name "restore"
                                 , Attr.type_ "submit"
-                                , Attr.value "Restore"
                                 , onClick ClickedCheckout
                                 ]
                                 [ case model.status of
                                     Loading -> viewSpinnerSymbol
-                                    _ -> i
-                                            [ Attr.class "fas fa-undo"
+                                    _ -> span []
+                                            [ i [ Attr.class "fas fa-lock mr-2" ] []
+                                            , text "Proceed to Checkout"
                                             ]
-                                            []
                                 ]
                             ]
-                        ]
                         , div
                             [ Attr.class "form-group mt-3"
                             ]

@@ -278,7 +278,8 @@ def checkout_api(body):
                 "plan": {
                     "company_id": current_app.config.get("WHOP_COMPANY_ID"),
                     "initial_price": total_price,
-                    "plan_type": "one_time"
+                    "plan_type": "one_time",
+                    "currency": "usd"
                 },
                 "metadata": {"session_id": session_id, "username": username or "", "items": json.dumps(items_meta)},
                 "redirect_url": redirect_url
