@@ -33,8 +33,9 @@ def start_scheduler(app):
         from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
         from apscheduler.executors.pool import ThreadPoolExecutor
 
+        db_url = app.config["SQLALCHEMY_DATABASE_URI"].replace("mysql://", "mysql+pymysql://", 1)
         jobstores = {
-            "default": SQLAlchemyJobStore(url=app.config["SQLALCHEMY_DATABASE_URI"])
+            "default": SQLAlchemyJobStore(url=db_url)
         }
         executors = {"default": ThreadPoolExecutor(1)}
         job_defaults = {"coalesce": True, "max_instances": 1}

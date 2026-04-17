@@ -272,9 +272,10 @@ def checkout_api(body):
 
     try:
         whop_resp = requests.post(
-            "https://api.whop.com/api/v1/checkout_configurations",
+            "https://api.whop.com/checkout_configurations",
             headers=_whop_headers(),
             json={
+                "mode": "payment",
                 "plan": {
                     "company_id": current_app.config.get("WHOP_COMPANY_ID"),
                     "currency": "usd",
@@ -316,9 +317,10 @@ def subscription_checkout_session_api(plan="premium"):
 
     try:
         whop_resp = requests.post(
-            "https://api.whop.com/api/v1/checkout_configurations",
+            "https://api.whop.com/checkout_configurations",
             headers=_whop_headers(),
             json={
+                "mode": "payment",
                 "plan_id": plan_id,
                 "metadata": {"session_id": session_id, "username": username},
                 "redirect_url": redirect_url
