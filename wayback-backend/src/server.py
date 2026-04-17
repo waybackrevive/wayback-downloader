@@ -78,6 +78,9 @@ def create_app():
     CORS(app)
     Sitemap(app)
 
+    from src.lib.abandonment import start_scheduler
+    start_scheduler(app)
+
     return app, connex_app
 
 

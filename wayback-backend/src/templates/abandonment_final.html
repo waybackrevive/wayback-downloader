@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Last chance — complete your restore</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f4f6f9; font-family: Arial, Helvetica, sans-serif; }
+    .wrapper { padding: 40px 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .header { background: #b03a2e; padding: 28px 32px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 22px; margin: 0; }
+    .header p { color: #f5c6c2; font-size: 14px; margin: 8px 0 0; }
+    .body { padding: 32px; }
+    .body p { color: #444444; font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+    .domain-card { background: #fff8f7; border: 1px solid #f5c6c2; border-radius: 6px; padding: 16px 20px; margin: 20px 0; }
+    .domain-card p { margin: 6px 0; font-size: 14px; color: #333; }
+    .domain-card strong { color: #b03a2e; }
+    .cart-total { font-size: 18px; font-weight: bold; color: #1a2238; margin: 20px 0; }
+    .urgency-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #856404; }
+    .cta { text-align: center; margin: 32px 0; }
+    .cta a { display: inline-block; background: #b03a2e; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 6px; font-size: 16px; font-weight: bold; letter-spacing: 0.3px; }
+    .divider { border: none; border-top: 1px solid #e8eaf0; margin: 24px 0; }
+    .footer { text-align: center; padding: 20px 32px 32px; }
+    .footer p { color: #888; font-size: 12px; margin: 4px 0; }
+    .footer a { color: #4b6cbf; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <div class="header">
+      <h1>Last chance &mdash; your restore is waiting</h1>
+      <p>This is your final reminder</p>
+    </div>
+    <div class="body">
+      <p>Hi there,</p>
+      <p>This is your final reminder about the website restore you started on <strong>Wayback Download</strong>. Your selected website(s) are still saved:</p>
+
+      <div class="domain-card">
+        {% for item in items %}
+        <p><strong>{{ item.domain }}</strong>
+          {% if item.timestamp %} — snapshot <code>{{ item.timestamp }}</code>{% endif %}
+        </p>
+        {% endfor %}
+      </div>
+
+      <p class="cart-total">Order Total: {{ cartValue }}</p>
+
+      <div class="urgency-box">
+        &#9888; <strong>This is your last reminder.</strong> Your checkout session is still active — complete it now to recover your website.
+      </div>
+
+      <p>Click below to finish your purchase. It only takes a minute:</p>
+
+      <div class="cta">
+        <a href="{{ checkoutUrl }}">Complete My Restore Now &rarr;</a>
+      </div>
+
+      <hr class="divider">
+
+      <p>Have questions about the restoration process? We're here to help — reply to this email or reach us at <a href="mailto:support@wayback.download">support@wayback.download</a>.</p>
+    </div>
+    <div class="footer">
+      <p><strong>Wayback Download</strong></p>
+      <p>Restore any lost website from the Wayback Machine</p>
+      <p><a href="https://wayback.download">wayback.download</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

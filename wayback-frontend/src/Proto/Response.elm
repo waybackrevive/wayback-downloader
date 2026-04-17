@@ -338,7 +338,7 @@ type alias ContactForm =
 -}
 defaultCart : Cart
 defaultCart =
-    { items = [] }
+    { items = [], email = "" }
 
 
 {-| Decode a `Cart` from Bytes
@@ -347,7 +347,11 @@ defaultCart =
 -}
 decodeCart : Protobuf.Decode.Decoder Cart
 decodeCart =
-    Protobuf.Decode.message defaultCart [ Protobuf.Decode.repeated 1 decodeCartItem .items (\a r -> { r | items = a }) ]
+    Protobuf.Decode.message
+        defaultCart
+        [ Protobuf.Decode.repeated 1 decodeCartItem .items (\a r -> { r | items = a })
+        , Protobuf.Decode.optional 2 Protobuf.Decode.string (\a r -> { r | email = a })
+        ]
 
 
 {-| Encode a `Cart` to Bytes
@@ -356,7 +360,10 @@ decodeCart =
 -}
 encodeCart : Cart -> Protobuf.Encode.Encoder
 encodeCart value =
-    Protobuf.Encode.message [ ( 1, Protobuf.Encode.list encodeCartItem value.items ) ]
+    Protobuf.Encode.message
+        [ ( 1, Protobuf.Encode.list encodeCartItem value.items )
+        , ( 2, Protobuf.Encode.string value.email )
+        ]
 
 
 {-| `Cart` message
@@ -364,7 +371,7 @@ encodeCart value =
 
 -}
 type alias Cart =
-    { items : List CartItem }
+    { items : List CartItem, email : String }
 
 
 {-| Default for CartItem. Should only be used for 'required' decoders as an initial value.
@@ -374,6 +381,65 @@ type alias Cart =
 defaultCartItem : CartItem
 defaultCartItem =
     { timestamp = "", domain = "" }
+
+
+{-| Default for AbandonedSession. Should only be used for 'required' decoders as an initial value.
+
+
+-}
+defaultAbandonedSession : AbandonedSession
+defaultAbandonedSession =
+    { sessionId = "", email = "", checkoutUrl = "", createdAt = "", recoverySentCount = "", cartValue = "", items = [] }
+
+
+{-| Decode a `AbandonedSession` from Bytes
+
+
+-}
+decodeAbandonedSession : Protobuf.Decode.Decoder AbandonedSession
+decodeAbandonedSession =
+    Protobuf.Decode.message
+        defaultAbandonedSession
+        [ Protobuf.Decode.optional 1 Protobuf.Decode.string (\a r -> { r | sessionId = a })
+        , Protobuf.Decode.optional 2 Protobuf.Decode.string (\a r -> { r | email = a })
+        , Protobuf.Decode.optional 3 Protobuf.Decode.string (\a r -> { r | checkoutUrl = a })
+        , Protobuf.Decode.optional 4 Protobuf.Decode.string (\a r -> { r | createdAt = a })
+        , Protobuf.Decode.optional 5 Protobuf.Decode.string (\a r -> { r | recoverySentCount = a })
+        , Protobuf.Decode.optional 6 Protobuf.Decode.string (\a r -> { r | cartValue = a })
+        , Protobuf.Decode.repeated 7 decodeCartItem .items (\a r -> { r | items = a })
+        ]
+
+
+{-| Encode a `AbandonedSession` to Bytes
+
+
+-}
+encodeAbandonedSession : AbandonedSession -> Protobuf.Encode.Encoder
+encodeAbandonedSession value =
+    Protobuf.Encode.message
+        [ ( 1, Protobuf.Encode.string value.sessionId )
+        , ( 2, Protobuf.Encode.string value.email )
+        , ( 3, Protobuf.Encode.string value.checkoutUrl )
+        , ( 4, Protobuf.Encode.string value.createdAt )
+        , ( 5, Protobuf.Encode.string value.recoverySentCount )
+        , ( 6, Protobuf.Encode.string value.cartValue )
+        , ( 7, Protobuf.Encode.list encodeCartItem value.items )
+        ]
+
+
+{-| `AbandonedSession` message
+
+
+-}
+type alias AbandonedSession =
+    { sessionId : String
+    , email : String
+    , checkoutUrl : String
+    , createdAt : String
+    , recoverySentCount : String
+    , cartValue : String
+    , items : List CartItem
+    }
 
 
 {-| Decode a `CartItem` from Bytes
@@ -565,7 +631,7 @@ type alias Receipt =
 -}
 defaultData : Data
 defaultData =
-    { user = Nothing, id = "", url = "", info = "", receipts = [], restores = [], restore = Nothing }
+    { user = Nothing, id = "", url = "", info = "", receipts = [], restores = [], restore = Nothing, abandonedSessions = [] }
 
 
 {-| Decode a `Data` from Bytes
@@ -583,6 +649,7 @@ decodeData =
         , Protobuf.Decode.repeated 5 decodeReceipt .receipts (\a r -> { r | receipts = a })
         , Protobuf.Decode.repeated 6 decodeRestore .restores (\a r -> { r | restores = a })
         , Protobuf.Decode.optional 7 (Protobuf.Decode.map Just decodeRestore) (\a r -> { r | restore = a })
+        , Protobuf.Decode.repeated 8 decodeAbandonedSession .abandonedSessions (\a r -> { r | abandonedSessions = a })
         ]
 
 
@@ -600,6 +667,7 @@ encodeData value =
         , ( 5, Protobuf.Encode.list encodeReceipt value.receipts )
         , ( 6, Protobuf.Encode.list encodeRestore value.restores )
         , ( 7, (Maybe.map encodeRestore >> Maybe.withDefault Protobuf.Encode.none) value.restore )
+        , ( 8, Protobuf.Encode.list encodeAbandonedSession value.abandonedSessions )
         ]
 
 
@@ -615,6 +683,7 @@ type alias Data =
     , receipts : List Receipt
     , restores : List Restore
     , restore : Maybe Restore
+    , abandonedSessions : List AbandonedSession
     }
 
 

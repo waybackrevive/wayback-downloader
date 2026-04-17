@@ -27,6 +27,7 @@ def run():
         db.session.add(Status(status="Awaiting Review"))
         db.session.add(Status(status="Done"))
         db.session.add(Status(status="Error"))
+        db.session.add(Status(status="Abandoned"))
         db.session.commit()
 
 

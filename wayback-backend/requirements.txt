@@ -19,3 +19,4 @@ pytest-cov==4.1.0
 pytemplate-reverse==0.0.3
 protobuf==4.24.4
 SQLAlchemy-serializer==1.4.1
+APScheduler==3.10.4

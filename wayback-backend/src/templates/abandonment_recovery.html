@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You left your restore incomplete</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f4f6f9; font-family: Arial, Helvetica, sans-serif; }
+    .wrapper { padding: 40px 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .header { background: #1a2238; padding: 28px 32px; text-align: center; }
+    .header img { height: 32px; }
+    .header h1 { color: #ffffff; font-size: 22px; margin: 12px 0 0; }
+    .body { padding: 32px; }
+    .body p { color: #444444; font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+    .domain-card { background: #f8f9fc; border: 1px solid #e0e4ef; border-radius: 6px; padding: 16px 20px; margin: 20px 0; }
+    .domain-card p { margin: 6px 0; font-size: 14px; color: #333; }
+    .domain-card strong { color: #1a2238; }
+    .cart-total { font-size: 18px; font-weight: bold; color: #1a2238; margin: 20px 0; }
+    .cta { text-align: center; margin: 32px 0; }
+    .cta a { display: inline-block; background: #4b6cbf; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 6px; font-size: 16px; font-weight: bold; letter-spacing: 0.3px; }
+    .divider { border: none; border-top: 1px solid #e8eaf0; margin: 24px 0; }
+    .footer { text-align: center; padding: 20px 32px 32px; }
+    .footer p { color: #888; font-size: 12px; margin: 4px 0; }
+    .footer a { color: #4b6cbf; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <div class="header">
+      <h1>You left your restore incomplete!</h1>
+    </div>
+    <div class="body">
+      <p>Hi there,</p>
+      <p>We noticed you started a website restore on <strong>Wayback Download</strong> but didn't complete checkout. Your selected website(s) are still saved and ready to go:</p>
+
+      <div class="domain-card">
+        {% for item in items %}
+        <p><strong>{{ item.domain }}</strong>
+          {% if item.timestamp %} — snapshot <code>{{ item.timestamp }}</code>{% endif %}
+        </p>
+        {% endfor %}
+      </div>
+
+      <p class="cart-total">Order Total: {{ cartValue }}</p>
+
+      <p>Your checkout link is still active. Click the button below to pick up right where you left off — no need to re-enter anything:</p>
+
+      <div class="cta">
+        <a href="{{ checkoutUrl }}">Complete My Restore &rarr;</a>
+      </div>
+
+      <hr class="divider">
+
+      <p>Need help? Just reply to this email or contact us at <a href="mailto:support@wayback.download">support@wayback.download</a> — we're happy to assist.</p>
+    </div>
+    <div class="footer">
+      <p><strong>Wayback Download</strong></p>
+      <p>Restore any lost website from the Wayback Machine</p>
+      <p><a href="https://wayback.download">wayback.download</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

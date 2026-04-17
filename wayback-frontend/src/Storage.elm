@@ -16,7 +16,7 @@ port module Storage exposing
 
 import Domain.User exposing (User, userDecoder, userEncoder)
 import Json.Decode as Decode exposing (Decoder, decodeValue, field, int, map, map2, nullable, string)
-import Json.Decode.Pipeline exposing (required)
+import Json.Decode.Pipeline exposing (optional, required)
 import Json.Encode as Encode exposing (Value, encode, list, string)
 import List exposing (concatMap)
 import Proto.Response exposing (Cart, CartItem)
@@ -47,6 +47,7 @@ cartToJson: Cart -> Value
 cartToJson cart =
     Encode.object
         [ ("items", (Encode.list cartItemToJson cart.items))
+        , ("email", Encode.string cart.email)
         ]
 
 cartItemToJson: CartItem -> Value
@@ -77,6 +78,7 @@ cartDecoder: Decoder Cart
 cartDecoder =
     Decode.succeed Cart
         |> required "items" (Decode.list cartItemDecoder)
+        |> optional "email" Decode.string ""
 
 cartItemDecoder: Decoder CartItem
 cartItemDecoder =
@@ -90,7 +92,7 @@ addItemToCart: CartItem -> Storage -> Cmd msg
 addItemToCart item storage =
     if not (checkItemExistInCart item storage) then
         let
-            cart = Cart (item :: storage.cart.items)
+            cart = Cart (item :: storage.cart.items) storage.cart.email
         in
         { storage | cart = cart}
             |> storageToJson
@@ -106,7 +108,7 @@ removeItemFromCart: CartItem -> Storage -> Cmd msg
 removeItemFromCart item storage =
     if checkItemExistInCart item storage then
         let
-            cart = Cart ((List.filter (\x -> x /= item) storage.cart.items))
+            cart = Cart ((List.filter (\x -> x /= item) storage.cart.items)) storage.cart.email
         in
         { storage | cart = cart }
             |> storageToJson
@@ -116,7 +118,7 @@ removeItemFromCart item storage =
 
 clearCart: Storage -> Cmd msg
 clearCart storage =
-    { storage | cart = (Cart []) }
+    { storage | cart = Cart [] storage.cart.email }
         |> storageToJson
         |> save
 
@@ -156,7 +158,7 @@ changeSubscriptionStatus storage status =
 
 init: Storage
 init =
-    { cart = Cart []
+    { cart = Cart [] ""
     , user = Nothing
     }
 

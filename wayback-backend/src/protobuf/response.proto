@@ -19,6 +19,7 @@ message Data {
   repeated Receipt receipts = 5;
   repeated Restore restores = 6;
   Restore restore = 7;
+  repeated AbandonedSession abandonedSessions = 8;
 }
 
 
@@ -53,6 +54,17 @@ message CartItem {
 
 message Cart {
   repeated CartItem items = 1;
+  string email = 2;
+}
+
+message AbandonedSession {
+  string sessionId = 1;
+  string email = 2;
+  string checkoutUrl = 3;
+  string createdAt = 4;
+  string recoverySentCount = 5;
+  string cartValue = 6;
+  repeated CartItem items = 7;
 }
 
 message ContactForm {

@@ -47,6 +47,7 @@ type Status
 type Msg
     = OrderResp (Result Http.Error Proto.Response)
     | QueueResp (Result Http.Error Proto.Response)
+    | AbandonedResp (Result Http.Error Proto.Response)
     | ChangeDomain String
     | ChangeTimestamp String
     | ChangeRestoreID String
@@ -75,6 +76,7 @@ type alias Model =
     , numPages: Int
     , currentPage: Int
     , showMenu: Bool
+    , abandonedSessions: List(Proto.AbandonedSession)
     }
 
 numResultsPerPage: Int
@@ -84,14 +86,14 @@ numResultsPerPage =
 init: Shared.Model -> User -> Request -> (Model, Cmd Msg)
 init shared user req =
     let
-        model = (Model None [] [] [] (Proto.QueueForm "" "" "" "" "" "") "" 1 1 False)
+        model = (Model None [] [] [] (Proto.QueueForm "" "" "" "" "" "") "" 1 1 False [])
     in
     if not user.admin then
         ( model
         , Request.replaceRoute Route.Dashboard req
         )
     else
-        ( model, getOrders shared.env user shared.storage )
+        ( model, Cmd.batch [ getOrders shared.env user shared.storage, getAbandoned shared.env user ] )
 
 
 
@@ -106,6 +108,18 @@ getOrders env user storage =
         , headers = [ Http.header "Authorization" ("Bearer " ++ user.token) ]
         , body = Http.emptyBody
         , expect = CustomHttp.expectProto OrderResp Proto.decodeResponse
+        , timeout = Nothing
+        , tracker = Nothing
+        }
+
+getAbandoned: EnvironmentVar -> User -> Cmd Msg
+getAbandoned env user =
+    Http.request
+        { url = env.serverUrl ++ "/admin/abandoned"
+        , method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ user.token) ]
+        , body = Http.emptyBody
+        , expect = CustomHttp.expectProto AbandonedResp Proto.decodeResponse
         , timeout = Nothing
         , tracker = Nothing
         }
@@ -171,6 +185,21 @@ update env user storage msg model =
                             ( { model | status = Success "Successfully queued message", queue = (Proto.QueueForm "" "" "" "" "" "") }, Cmd.none)
                 Err err ->
                     errorHandler model storage err
+
+        AbandonedResp result ->
+            case result of
+                Ok resp ->
+                    case resp.status of
+                        Proto.Status_FAILED ->
+                            ( model, Cmd.none )
+                        _ ->
+                            case resp.data of
+                                Just data ->
+                                    ( { model | abandonedSessions = data.abandonedSessions }, Cmd.none )
+                                Nothing ->
+                                    ( model, Cmd.none )
+                Err _ ->
+                    ( model, Cmd.none )
 
         ClickedQueue ->
             if model.queue.domain /= "" && model.queue.timestamp /= "" && model.queue.restoreId /= "" && model.queue.email /= "" && model.queue.action /= "" then
@@ -294,6 +323,7 @@ view shared model =
     , body = [ viewHeader shared.storage.user "sub" "" viewMain (Html.text "") ClickedToggleMenu model.showMenu
              , viewSection1 model
              , viewSection2 model
+             , viewSection3 model
              , viewFooter shared.year
              ]
     }
@@ -736,3 +766,72 @@ getDateFromPosix posix =
             ] Time.utc (Time.millisToPosix (date * 1000))
         Nothing ->
             posix
+
+
+viewSection3: Model -> Html Msg
+viewSection3 model =
+    section
+        [ Attr.class "padding-20-0"
+        ]
+        [ div
+            [ Attr.class "container"
+            ]
+            [ div
+                [ Attr.class "row justify-content-start futures-version-2"
+                ]
+                [ div
+                    [ Attr.class "col-lg"
+                    ]
+                    [ div
+                        [ Attr.class "futures-version-3-box"
+                        , Attr.style "margin-top" "0px"
+                        ]
+                        [ h4 [] [ text "Abandoned Carts" ]
+                        , p [ Attr.class "text-muted" ] [ text (String.fromInt (List.length model.abandonedSessions) ++ " sessions awaiting payment") ]
+                        , div
+                            [ Attr.class "table-responsive"
+                            ]
+                            [ table
+                                [ Attr.class "table table-striped table-hover"
+                                ]
+                                [ thead []
+                                    [ tr []
+                                        [ th [] [ text "Created At" ]
+                                        , th [] [ text "Email" ]
+                                        , th [] [ text "Domains" ]
+                                        , th [] [ text "Cart Value" ]
+                                        , th [] [ text "Emails Sent" ]
+                                        , th [] [ text "Checkout Link" ]
+                                        ]
+                                    ]
+                                , tbody []
+                                    (List.map viewAbandonedItem model.abandonedSessions)
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+viewAbandonedItem: Proto.AbandonedSession -> Html Msg
+viewAbandonedItem session =
+    tr []
+        [ td [] [ text session.createdAt ]
+        , td [] [ text session.email ]
+        , td [] [ text (String.join ", " (List.map .domain session.items)) ]
+        , td [] [ text ("$" ++ session.cartValue) ]
+        , td [] [ text session.recoverySentCount ]
+        , td []
+            [ a
+                [ Attr.href session.checkoutUrl
+                , Attr.target "_blank"
+                , Attr.class "plan-dedicated-order-button"
+                , Attr.style "background" "#1a2238"
+                , Attr.style "border" "0px"
+                , Attr.style "width" "100px"
+                ]
+                [ text "Checkout" ]
+            ]
+        ]

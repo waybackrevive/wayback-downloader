@@ -82,3 +82,22 @@ def queue(body):
         return ProtobufResponse().success(HTTPStatus.OK)
     else:
         return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY, error="Invalid data received")
+
+
+@cognito_auth_header_required_api
+@admin_required
+def abandoned_sessions():
+    """Return sessions where email was captured but payment never completed."""
+    sessions = (
+        WhopSession.query
+        .filter(WhopSession.email.isnot(None))
+        .filter(WhopSession.email != "")
+        .filter(WhopSession.paymentId.is_(None))
+        .order_by(WhopSession.createdAt.desc())
+        .all()
+    )
+    result = []
+    for session in sessions:
+        session_restores = Restore.query.filter_by(sessionId=session.sessionId).all()
+        result.append((session, session_restores))
+    return ProtobufResponse().success(HTTPStatus.OK, abandonedSessions=result)

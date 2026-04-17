@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from src.model.orm import Status, Restore, Receipt, Client, StripeSession, StripePayment
+from src.model.orm import Status, Restore, Receipt, Client, WhopSession, WhopPayment
 
 def test_status():
     status = Status(id=1, status="In Progress")
@@ -30,22 +30,21 @@ def test_receipts():
     assert receipt.amount == "123.123"
 
 def test_client():
-    client = Client(username="test", email="test@test.com", customerId="1234", subscriptionId="1234")
+    client = Client(username="test", email="test@test.com", whopUserId="1234", whopMembershipId="1234")
     assert client.username == "test"
     assert client.email == "test@test.com"
-    assert client.customerId == "1234"
-    assert client.subscriptionId == "1234"
-    assert json.dumps(client.serialized) == '{"username": "test", "email": "test@test.com", "customerId": "1234", "subscriptionId": "1234"}'
+    assert client.whopUserId == "1234"
+    assert client.whopMembershipId == "1234"
 
-def test_stripesession():
-    stripe_session = StripeSession(sessionId="1234", paymentIntent="1234", username="test", subscription="1234")
-    assert stripe_session.sessionId == "1234"
-    assert stripe_session.paymentIntent == "1234"
-    assert stripe_session.username == "test"
-    assert stripe_session.subscription == "1234"
+def test_whopsession():
+    whop_session = WhopSession(sessionId="1234", checkoutId="1234", username="test", subscription="1234")
+    assert whop_session.sessionId == "1234"
+    assert whop_session.checkoutId == "1234"
+    assert whop_session.username == "test"
+    assert whop_session.subscription == "1234"
 
-def test_stripepayment():
-    stripe_payment = StripePayment(paymentIntent="1234", amount="1234", invoiceUrl="http://amazon.com")
-    assert stripe_payment.paymentIntent == "1234"
-    assert stripe_payment.amount == "1234"
-    assert stripe_payment.invoiceUrl == "http://amazon.com"
+def test_whoppayment():
+    whop_payment = WhopPayment(paymentId="1234", amount="1234", receiptUrl="http://amazon.com", receiptEmail="test@test.com")
+    assert whop_payment.paymentId == "1234"
+    assert whop_payment.amount == "1234"
+    assert whop_payment.receiptUrl == "http://amazon.com"

@@ -239,7 +239,7 @@ def process_api(body):
 
 @cognito_auth_header_optional_api
 def checkout_api(body):
-    """Create a Whop checkout link for one-time restore purchase ($19 first domain, $12 each additional)"""
+    """Create a Whop checkout link for one-time restore purchase ($29 first domain, $19 each additional)"""
     username = g.cogauth_username
     client = get_client(username) if username else None
 
@@ -252,6 +252,16 @@ def checkout_api(body):
         resp = validate_cart(item.domain, item.timestamp)
         if resp is not None:
             return resp
+
+    # Resolve email: prefer what the user typed, fall back to account email
+    email = (cart.email or "").strip()
+    if not email and client and client.email:
+        email = client.email
+    if email and not validators.email(email):
+        return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY, error="Invalid email address")
+    if not email:
+        return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY,
+                                          error="Email is required to save your order")
 
     session_id = str(uuid4())
     n = len(cart.items)
@@ -286,9 +296,10 @@ def checkout_api(body):
         log.error("Unable to create Whop checkout: %s", exception)
         return ProtobufResponse().failure(HTTPStatus.BAD_REQUEST, error="Unable to create checkout")
 
+    checkout_url = checkout_data.get("purchase_url", "")
     add_websites(cart, username, session_id)
-    add_whop_session(session_id, checkout_data["id"], username)
-    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_data["purchase_url"])
+    add_whop_session(session_id, checkout_data["id"], username, email=email, checkout_url=checkout_url)
+    return ProtobufResponse().success(HTTPStatus.OK, url=checkout_url)
 
 
 @cognito_auth_header_required_api
@@ -507,10 +518,17 @@ def add_websites(cart, username, sessionId):
         log.error("Unable to add websites: %s", exception)
 
 
-def add_whop_session(sessionId, checkoutId, username):
+def add_whop_session(sessionId, checkoutId, username, email=None, checkout_url=None):
     """Add Whop session to db"""
     try:
-        db.session.add(WhopSession(sessionId=sessionId, checkoutId=checkoutId, username=username))
+        db.session.add(WhopSession(
+            sessionId=sessionId,
+            checkoutId=checkoutId,
+            username=username,
+            email=email,
+            checkoutUrl=checkout_url,
+            createdAt=datetime.utcnow(),
+        ))
         db.session.commit()
     except Exception as exception:
         log.error("Unable to add WhopSession (%s) for %s: %s", sessionId, username, exception)

@@ -405,3 +405,24 @@ paths:
           headers:
             Content-Type:
               type: string
+  /admin/abandoned:
+    get:
+      x-swagger-router-controller: src.controllers.admin
+      operationId: abandoned_sessions
+      tags:
+        - Admin
+      consumes:
+        - application/protobuf
+      produces:
+        - application/protobuf
+      responses:
+        200:
+          description: Success
+          headers:
+            Content-Type:
+              type: string
+        401:
+          description: Unauthorized
+          headers:
+            Content-Type:
+              type: string

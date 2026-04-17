@@ -8,7 +8,7 @@ import Common.CustomHttp as CustomHttp
 import Common.Spinner exposing (viewSpinnerSymbol, viewSpinnerText)
 import Domain.User exposing (User)
 import Environment exposing (EnvironmentVar)
-import Html exposing (Html, a, b, br, button, div, h3, h4, hr, i, input, main_, p, section, span, table, tbody, td, text, tr)
+import Html exposing (Html, a, b, br, button, div, h3, h4, hr, i, input, label, main_, p, section, small, span, table, tbody, td, text, tr)
 import Html.Attributes as Attr
 import Html.Events exposing (onClick, onInput)
 import Http exposing (Error(..))
@@ -44,6 +44,7 @@ type Status
 
 type Msg
     = ChangeUrl String
+    | ChangeEmail String
     | ClickedAddToCart
     | ClickedRemoveFromCart CartItem
     | ClickedCheckout
@@ -55,13 +56,14 @@ type Msg
 
 type alias Model =
     { url: String
+    , email: String
     , status: Status
     , showMenu: Bool
     }
 
 init: User -> EnvironmentVar -> (Model, Cmd Msg)
 init user env =
-    (Model "" None False, getUser user env)
+    (Model "" "" None False, getUser user env)
 
 -- Update
 
@@ -102,7 +104,7 @@ getCheckoutUrl env storage user model =
           { url = env.serverUrl ++ "/checkout"
           , method = "POST"
           , headers = [ Http.header "Authorization" ("Bearer " ++ user.token) ]
-          , body = Http.bytesBody "application/protobuf" <| Encode.encode (Proto.encodeCart storage.cart)
+          , body = Http.bytesBody "application/protobuf" <| Encode.encode (Proto.encodeCart { items = storage.cart.items, email = model.email })
           , expect = CustomHttp.expectProto CheckoutResp Proto.decodeResponse
           , timeout = Nothing
           , tracker = Nothing
@@ -126,6 +128,7 @@ update: Shared.Model -> User -> Msg -> Model -> (Model, Cmd Msg)
 update shared user msg model =
     case msg of
         ChangeUrl url -> ( { model | url = url }, Cmd.none)
+        ChangeEmail email -> ( { model | email = email }, Cmd.none)
 
         ClickedAddToCart ->
             if model.url == "" then
@@ -396,6 +399,19 @@ viewOrderSummary env storage model =
                               , text "$" ]
                           ]
                       ]
+                ]
+            , div
+                [ Attr.class "form-group mt-3" ]
+                [ label [] [ text "Email address" ]
+                , input
+                    [ Attr.type_ "email"
+                    , Attr.class "form-control"
+                    , Attr.placeholder "Enter your email to save your order"
+                    , Attr.value model.email
+                    , onInput ChangeEmail
+                    ]
+                    []
+                , small [ Attr.class "form-text text-muted" ] [ text "We'll send your restore link here." ]
                 ]
             , button
                 [ Attr.class "plan-dedicated-order-button"

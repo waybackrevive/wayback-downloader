@@ -93,6 +93,23 @@ class ProtobufResponse:
                     restore.s3Url = item.s3Url
                 restore.transactDate = str(item.transactDate)
                 data.restore.CopyFrom(restore)
+            elif key == "abandonedSessions":
+                for session, session_restores in value:
+                    ab = response_pb2.AbandonedSession()
+                    ab.sessionId = session.sessionId
+                    ab.email = session.email or ""
+                    ab.checkoutUrl = session.checkoutUrl or ""
+                    ab.createdAt = session.createdAt.isoformat() if session.createdAt else ""
+                    ab.recoverySentCount = str(session.recoverySentCount)
+                    count = len(session_restores)
+                    cart_val = 29.0 + max(0, count - 1) * 19.0
+                    ab.cartValue = "${:.2f}".format(cart_val)
+                    for r in session_restores:
+                        cart_item = response_pb2.CartItem()
+                        cart_item.domain = r.domain
+                        cart_item.timestamp = r.timestamp
+                        ab.items.append(cart_item)
+                    data.abandonedSessions.append(ab)
             elif key == "id":
                 data.id = value
             elif key == "url":

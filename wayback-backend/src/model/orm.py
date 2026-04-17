@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """SQLAlchemy db model"""
 
+from datetime import datetime
 from sqlalchemy_serializer import SerializerMixin
 from src.config import db
 
@@ -42,6 +43,10 @@ class WhopSession(db.Model, SerializerMixin):
     paymentId = db.Column(db.String(255), nullable=True)
     username = db.Column(db.String(255), db.ForeignKey("clients.username"), nullable=True)
     subscription = db.Column(db.String(255), nullable=True)
+    email = db.Column(db.String(255), nullable=True)
+    createdAt = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
+    checkoutUrl = db.Column(db.String(512), nullable=True)
+    recoverySentCount = db.Column(db.Integer, nullable=False, default=0)
 
     client = db.relationship("Client")
 

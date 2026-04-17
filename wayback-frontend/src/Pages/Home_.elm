@@ -43,13 +43,14 @@ type Status
 type alias Model =
     { domain : String
     , url: String
+    , email: String
     , status: Status
     , showMenu: Bool
     }
 
 init : (Model, Cmd Msg)
 init =
-    (Model "" "" None False, Cmd.none)
+    (Model "" "" "" None False, Cmd.none)
 
 -- Update
 
@@ -61,6 +62,7 @@ type Msg
     | ClickedExit
     | ChangeWaybackUrl String
     | ChangeDomain String
+    | ChangeEmail String
     | CheckoutResp (Result Http.Error Proto.Response)
     | ClickedToggleMenu
 
@@ -84,7 +86,7 @@ getCheckoutUrl env model =
             ( model
                 , Http.post
                     { url = env.serverUrl ++ "/checkout"
-                    , body = Http.bytesBody "application/protobuf" <| Encode.encode (Proto.encodeCart (Proto.Cart [cartItem]))
+                    , body = Http.bytesBody "application/protobuf" <| Encode.encode (Proto.encodeCart (Proto.Cart [cartItem] model.email))
                     , expect = CustomerHttp.expectProto CheckoutResp Proto.decodeResponse
                     }
                 )
@@ -113,6 +115,9 @@ update shared msg model =
 
         ChangeDomain domain ->
             ({model | domain = domain}, Cmd.none)
+
+        ChangeEmail email ->
+            ({model | email = email}, Cmd.none)
 
         CheckoutResp result ->
             case result of
@@ -308,6 +313,22 @@ viewModal model =
                                 ]
                             ]
                         ]
+                        , div
+                            [ Attr.class "form-group mt-3"
+                            ]
+                            [ label [] [ text "Your email address" ]
+                            , input
+                                [ Attr.id "email-checkout"
+                                , Attr.name "email"
+                                , Attr.placeholder "Enter your email to save your order"
+                                , Attr.type_ "email"
+                                , Attr.class "form-control"
+                                , Attr.value model.email
+                                , onInput ChangeEmail
+                                ]
+                                []
+                            , small [ Attr.class "form-text text-muted" ] [ text "We'll send your restore link here." ]
+                            ]
                         , br []
                                   []
                               , p []
