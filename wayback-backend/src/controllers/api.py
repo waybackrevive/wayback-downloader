@@ -66,7 +66,7 @@ def confirm_signup_api(body):
     form = response_pb2.ConfirmSignupForm()
     form.ParseFromString(body)
     if form.IsInitialized() and form.username != "" and form.code != "":
-        return CognitoUser.confirm_signup(form.username, form.code)
+        return CognitoUser.confirm_signup(form.username.strip(), form.code.strip())
     else:
         return ProtobufResponse().failure(HTTPStatus.UNPROCESSABLE_ENTITY, error="Invalid body sent")
 
