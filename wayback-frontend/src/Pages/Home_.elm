@@ -242,7 +242,7 @@ viewModal model =
                     [ h4
                         [ Attr.class "modal-title"
                         ]
-                        [ text "3 easy steps to start your recovery" ]
+                        [ text "Recover Your Website — 3 Simple Steps" ]
                     , button
                         [ Attr.class "close"
                         , Attr.attribute "data-dismiss" "modal"
@@ -254,24 +254,33 @@ viewModal model =
                 , div
                     [ Attr.class "modal-body"
                     ]
-                    [ p []
-                        [ b []
-                            [ text "Step 1. " ]
-                        , text "Navigate to the ", a
-                            [ Attr.href ("https://web.archive.org/web/*/" ++ model.domain)
-                            , Attr.id "wayback_url"
-                            , Attr.target "_blank"
-                            ]
-                            [ text "Wayback Machine" ]
+                    [ div [ Attr.class "alert alert-info py-2 mb-3", Attr.style "font-size" "0.9rem" ]
+                        [ i [ Attr.class "fas fa-lock mr-1" ] []
+                        , text " Secure checkout · One-time payment · "
+                        , b [] [ text "$29/website" ]
+                        , text " · No subscription required"
                         ]
-                    , p []
-                        [ b []
-                            [ text "Step 2. " ]
-                        , text "Select a snapshot using the date selector" ]
-                    , p []
-                        [ b []
-                            [ text "Step 3. " ]
-                        , text "Copy the URL in the bar below" ]
+                    , div [ Attr.class "mb-3" ]
+                        [ p [ Attr.class "mb-1" ]
+                            [ span [ Attr.class "badge badge-primary mr-2" ] [ text "1" ]
+                            , text "Open the "
+                            , a
+                                [ Attr.href ("https://web.archive.org/web/*/" ++ model.domain)
+                                , Attr.id "wayback_url"
+                                , Attr.target "_blank"
+                                ]
+                                [ text "Wayback Machine" ]
+                            , text " for your domain"
+                            ]
+                        , p [ Attr.class "mb-1" ]
+                            [ span [ Attr.class "badge badge-primary mr-2" ] [ text "2" ]
+                            , text "Pick the snapshot date you want to restore"
+                            ]
+                        , p [ Attr.class "mb-1" ]
+                            [ span [ Attr.class "badge badge-primary mr-2" ] [ text "3" ]
+                            , text "Paste the full archive URL into the field below"
+                            ]
+                        ]
                     , case model.status of
                         Failure err -> viewAlertError err
                         _ -> div [] []
@@ -316,41 +325,43 @@ viewModal model =
                         , div
                             [ Attr.class "form-group mt-3"
                             ]
-                            [ label [] [ text "Your email address" ]
+                            [ label [] [ b [] [ text "Your email address" ] ]
                             , input
                                 [ Attr.id "email-checkout"
                                 , Attr.name "email"
-                                , Attr.placeholder "Enter your email to save your order"
+                                , Attr.placeholder "you@example.com"
                                 , Attr.type_ "email"
                                 , Attr.class "form-control"
                                 , Attr.value model.email
                                 , onInput ChangeEmail
                                 ]
                                 []
-                            , small [ Attr.class "form-text text-muted" ] [ text "We'll send your restore link here." ]
+                            , small [ Attr.class "form-text text-muted" ]
+                                [ i [ Attr.class "fas fa-envelope mr-1" ] []
+                                , text "We'll email you a download link when your restore is ready. "
+                                , text "No spam, ever."
+                                ]
                             ]
-                        , br []
-                                  []
-                              , p []
-                                  [ text " If you require any assistance during this process, our", a
-                                      [ Attr.href "mailto:support@wayback.download"
-                                      ]
-                                      [ text " support team " ]
-                                  , text "would be more than happy to help you out!" ]
-                                  , div
-                                          [ Attr.class "modal-footer"
-                                          ]
-                                          [ button
-                                              [ Attr.class "btn btn-danger"
-                                              , Attr.attribute "data-dismiss" "modal"
-                                              , Attr.id "cancel"
-                                              , Attr.type_ "button"
-                                              ]
-                                              [ text "Cancel" ]
-                                          ]
-                                      ]
-                              ]
+                        , div [ Attr.class "mt-3 text-muted", Attr.style "font-size" "0.85rem" ]
+                            [ i [ Attr.class "fas fa-headset mr-1" ] []
+                            , text "Questions? Our "
+                            , a [ Attr.href "mailto:support@wayback.download" ] [ text "support team" ]
+                            , text " is here to help."
+                            ]
+                        , div
+                            [ Attr.class "modal-footer"
+                            ]
+                            [ button
+                                [ Attr.class "btn btn-outline-secondary"
+                                , Attr.attribute "data-dismiss" "modal"
+                                , Attr.id "cancel"
+                                , Attr.type_ "button"
+                                ]
+                                [ text "Cancel" ]
+                            ]
                         ]
+                    ]
+            ]
 
             ]
 
