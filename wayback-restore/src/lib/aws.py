@@ -111,7 +111,7 @@ def s3_get_file(filename):
 def send_email(recipient, template="order_ready", **kwargs):
     """Send email to client using SES"""
     try:
-        client = boto3.client("ses", region_name="us-west-2")
+        client = boto3.client("ses", region_name=os.environ.get("SES_REGION", "eu-north-1"))
         message = {"Subject": {"Data": "Your order is ready!"},
                    "Body": {"Text": {"Data": "Your order is ready! \
                     You can download your restored website by heading to the "},
